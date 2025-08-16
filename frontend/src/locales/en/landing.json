@@ -1,0 +1,111 @@
+{
+  "hero": {
+    "title": "Professional File Splitting Tool",
+    "subtitle": "Split files quickly based on single column values, supporting CSV, Excel, and TXT formats",
+    "description": "Our tool can intelligently split large files into multiple smaller files based on specified column values, making your data processing more efficient and convenient.",
+    "startButton": "Get Started",
+    "demoButton": "Watch Demo"
+  },
+  "features": {
+    "title": "Core Features",
+    "subtitle": "Why choose our file splitting tool",
+    "csvSupport": {
+      "title": "CSV Format Support",
+      "description": "Full support for CSV files, including Big5, UTF-8 and other encoding formats, ensuring your Chinese data is processed correctly"
+    },
+    "smartSplit": {
+      "title": "Smart Splitting",
+      "description": "Automatically group by your selected column values, generating a separate file for each unique value while maintaining original data structure"
+    },
+    "fastProcess": {
+      "title": "Fast Processing",
+      "description": "Efficient processing engine that completes large file splitting in seconds, saving your valuable time"
+    },
+    "easyDownload": {
+      "title": "Easy Download",
+      "description": "Automatically packaged into ZIP files after processing, one-click download of all split results"
+    },
+    "secureProcess": {
+      "title": "Secure & Reliable",
+      "description": "Encrypted file transmission, automatic deletion after processing, protecting your data privacy and security"
+    },
+    "multiFormat": {
+      "title": "Multi-Format Support",
+      "description": "Premium version supports CSV, Excel (.xlsx/.xls) and TXT formats, meeting different needs"
+    }
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "subtitle": "Complete file splitting in three simple steps",
+    "step1": {
+      "title": "Upload File",
+      "description": "Select and upload the file you want to split"
+    },
+    "step2": {
+      "title": "Select Split Column",
+      "description": "Preview file content and select the column for splitting"
+    },
+    "step3": {
+      "title": "Download Results",
+      "description": "Download the ZIP package containing all split files after processing"
+    }
+  },
+  "demo": {
+    "title": "Feature Demo",
+    "subtitle": "Simple three steps, easy file splitting",
+    "originalData": "Original Data",
+    "afterSplit": "After Split",
+    "downloadZip": "Next Step"
+  },
+  "pricing": {
+    "title": "Choose Your Plan",
+    "subtitle": "Flexible pricing options to meet different usage needs",
+    "free": {
+      "name": "Free Plan",
+      "price": "Free",
+      "features": [
+        "5 processes per day",
+        "Max 10MB file size",
+        "CSV format support",
+        "Basic functionality"
+      ],
+      "limitations": [
+        "Limited daily usage",
+        "File size restrictions",
+        "CSV format only"
+      ],
+      "button": "Get Started"
+    },
+    "premium": {
+      "name": "Premium Plan", 
+      "price": "$9.99 USD",
+      "period": "/month",
+      "popular": "Most Popular",
+      "popularLabel": "Recommended",
+      "features": [
+        "50 processes per day",
+        "Max 100MB file size",
+        "CSV, Excel, TXT support",
+        "Full functionality",
+        "Processing history"
+      ],
+      "button": "Upgrade Now"
+    }
+  },
+  "testimonials": {
+    "title": "User Reviews",
+    "subtitle": "See what other users say about our tool"
+  },
+  "cta": {
+    "title": "Ready to Get Started?",
+    "subtitle": "Register now and begin your efficient file processing journey",
+    "button": "Sign Up Free"
+  },
+  "authDialog": {
+    "title": "Start Using File Splitting Tool",
+    "subtitle": "Please choose a login method to use our file processing tool",
+    "existingAccount": "Sign in with existing account",
+    "newAccount": "Create new account",
+    "continueBrowsing": "Continue browsing"
+  }
+}

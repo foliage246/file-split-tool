@@ -12,12 +12,15 @@ import {
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { Login as LoginIcon, PersonAdd, CheckCircle } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/SimpleAuthContext';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 
 export const LoginPage: React.FC = () => {
   const { login, error, isLoading, clearError } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation(['auth', 'common']);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -36,12 +39,12 @@ export const LoginPage: React.FC = () => {
     
     // 基本驗證
     if (!formData.email || !formData.password) {
-      setFormError('請填寫所有欄位');
+      setFormError(t('validation.emailRequired'));
       return;
     }
 
     if (!formData.email.includes('@')) {
-      setFormError('請輸入有效的電子郵件地址');
+      setFormError(t('validation.emailInvalid'));
       return;
     }
 
@@ -55,6 +58,17 @@ export const LoginPage: React.FC = () => {
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex' }}>
+      {/* 語言切換器 */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 16,
+          right: 16,
+          zIndex: 1000,
+        }}
+      >
+        <LanguageSwitcher variant="button" size="small" />
+      </Box>
       {/* 左側：產品亮點 */}
       <Box
         sx={{
@@ -71,31 +85,31 @@ export const LoginPage: React.FC = () => {
       >
         <Box sx={{ position: 'relative', zIndex: 1 }}>
           <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-            檔案切分工具
+            {t('features.toolTitle')}
           </Typography>
           <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
-            智能檔案處理，讓數據整理變得簡單高效
+            {t('features.subtitle')}
           </Typography>
           <Box sx={{ mb: 4 }}>
             <Typography variant="body1" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
               <CheckCircle sx={{ mr: 2 }} />
-              免費版支援 CSV 格式
+              {t('features.csvSupport')}
             </Typography>
             <Typography variant="body1" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
               <CheckCircle sx={{ mr: 2 }} />
-              智能識別 Big5、UTF-8 編碼
+              {t('features.encodingSupport')}
             </Typography>
             <Typography variant="body1" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
               <CheckCircle sx={{ mr: 2 }} />
-              按欄位內容自動切分檔案
+              {t('features.autoSplit')}
             </Typography>
             <Typography variant="body1" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
               <CheckCircle sx={{ mr: 2 }} />
-              免費版每日 5 次處理
+              {t('features.dailyLimit')}
             </Typography>
           </Box>
           <Typography variant="body2" sx={{ opacity: 0.8 }}>
-            已有超過 1,000+ 用戶信賴我們的檔案處理服務
+            {t('features.userCount')}
           </Typography>
         </Box>
         {/* 背景裝飾 */}
@@ -128,10 +142,10 @@ export const LoginPage: React.FC = () => {
           {/* 標題 */}
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
-              登入
+              {t('common:nav.login')}
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              登入您的檔案切分工具帳戶
+              {t('login.subtitle')}
             </Typography>
           </Box>
 
@@ -146,7 +160,7 @@ export const LoginPage: React.FC = () => {
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="電子郵件"
+              label={t('login.emailLabel')}
               name="email"
               type="email"
               value={formData.email}
@@ -159,7 +173,7 @@ export const LoginPage: React.FC = () => {
 
             <TextField
               fullWidth
-              label="密碼"
+              label={t('login.passwordLabel')}
               name="password"
               type="password"
               value={formData.password}
@@ -179,7 +193,7 @@ export const LoginPage: React.FC = () => {
               size="large"
               sx={{ mt: 3, mb: 2 }}
             >
-              登入
+              {t('login.submitButton')}
             </LoadingButton>
           </Box>
 
@@ -188,7 +202,7 @@ export const LoginPage: React.FC = () => {
           {/* 註冊連結 */}
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="body2" color="textSecondary" gutterBottom>
-              還沒有帳戶？
+              {t('features.noAccount')}
             </Typography>
             <Button
               component={RouterLink}
@@ -198,21 +212,21 @@ export const LoginPage: React.FC = () => {
               size="large"
               fullWidth
             >
-              註冊新帳戶
+              {t('features.registerNew')}
             </Button>
           </Box>
 
           {/* 安全說明 */}
           <Box sx={{ mt: 4, p: 3, bgcolor: 'rgba(76, 175, 80, 0.04)', borderRadius: 2 }}>
             <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 'bold', color: '#2e7d32' }}>
-              🔒 安全保證
+              {t('features.securityTitle')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              • 所有資料傳輸均採用 SSL 加密
+              {t('features.sslEncryption')}
               <br />
-              • 檔案處理完成後自動刪除
+              {t('features.autoDelete')}
               <br />
-              • 不會保存您的個人資料
+              {t('features.noStorage')}
             </Typography>
           </Box>
         </Paper>

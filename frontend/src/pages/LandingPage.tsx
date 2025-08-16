@@ -40,75 +40,81 @@ import {
   GetApp,
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/SimpleAuthContext';
+import { LanguageSwitcher } from '../components/LanguageSwitcher';
 
-const steps = ['上傳檔案', '選擇切分欄位', '下載處理結果'];
-
-const features = [
-  {
-    icon: <CloudUpload sx={{ fontSize: 48, color: '#1976d2' }} />,
-    title: '支援CSV格式',
-    description: '支援 CSV 檔案處理，自動識別 Big5、UTF-8 等多種編碼格式',
-  },
-  {
-    icon: <TableChart sx={{ fontSize: 48, color: '#1976d2' }} />,
-    title: '智能欄位切分',
-    description: '選擇任意欄位，按照欄位內容自動切分成多個檔案，保持原始格式和結構',
-  },
-  {
-    icon: <Speed sx={{ fontSize: 48, color: '#1976d2' }} />,
-    title: '快速處理',
-    description: '高效的後端處理引擎，CSV檔案能在短時間內完成切分處理',
-  },
-];
-
-const useCases = [
-  '客戶資料按地區分類',
-  '銷售數據按月份切分',
-  '產品清單按類別整理',
-  '員工資料按部門分組',
-  '訂單記錄按狀態分類',
-  '庫存資料按倉庫切分',
-];
-
-const pricingPlans = [
-  {
-    name: '免費版',
-    price: 0,
-    currency: 'USD',
-    features: [
-      '每日 5 次處理',
-      '最大 10MB 檔案',
-      '支援 CSV 格式',
-      '基本功能使用',
-    ],
-    limitations: [
-      '處理次數有限',
-      '檔案大小限制',
-      '僅支援 CSV 格式',
-    ],
-  },
-  {
-    name: '付費版',
-    price: 9.99,
-    currency: 'USD',
-    features: [
-      '每日 50 次處理',
-      '最大 100MB 檔案',
-      '支援 CSV、Excel、TXT',
-      '完整功能使用',
-      '處理歷史記錄',
-    ],
-    limitations: [],
-    popular: true,
-  },
-];
 
 export const LandingPage: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation(['landing', 'common']);
   const [authDialogOpen, setAuthDialogOpen] = useState(false);
   const [demoStep, setDemoStep] = useState(0);
+
+  // 使用翻譯的動態數據
+  const steps = [
+    t('howItWorks.step1.title'),
+    t('howItWorks.step2.title'),
+    t('howItWorks.step3.title'),
+  ];
+
+  const useCases = [
+    t('howItWorks.step1.description'),
+    t('howItWorks.step2.description'), 
+    t('howItWorks.step3.description'),
+  ];
+
+  const features = [
+    {
+      icon: <CloudUpload sx={{ fontSize: 48, color: '#1976d2' }} />,
+      title: t('features.csvSupport.title'),
+      description: t('features.csvSupport.description'),
+    },
+    {
+      icon: <TableChart sx={{ fontSize: 48, color: '#1976d2' }} />,
+      title: t('features.smartSplit.title'),
+      description: t('features.smartSplit.description'),
+    },
+    {
+      icon: <Speed sx={{ fontSize: 48, color: '#1976d2' }} />,
+      title: t('features.fastProcess.title'),
+      description: t('features.fastProcess.description'),
+    },
+    {
+      icon: <Download sx={{ fontSize: 48, color: '#1976d2' }} />,
+      title: t('features.easyDownload.title'),
+      description: t('features.easyDownload.description'),
+    },
+    {
+      icon: <Security sx={{ fontSize: 48, color: '#1976d2' }} />,
+      title: t('features.secureProcess.title'),
+      description: t('features.secureProcess.description'),
+    },
+    {
+      icon: <CheckCircle sx={{ fontSize: 48, color: '#1976d2' }} />,
+      title: t('features.multiFormat.title'),
+      description: t('features.multiFormat.description'),
+    },
+  ];
+
+  const pricingPlans = [
+    {
+      name: t('pricing.free.name'),
+      price: t('pricing.free.price'),
+      features: t('pricing.free.features', { returnObjects: true }) as string[],
+      limitations: t('pricing.free.limitations', { returnObjects: true }) as string[],
+      button: t('pricing.free.button'),
+    },
+    {
+      name: t('pricing.premium.name'),
+      price: t('pricing.premium.price'),
+      period: t('pricing.premium.period'),
+      popular: t('pricing.premium.popular'),
+      features: t('pricing.premium.features', { returnObjects: true }) as string[],
+      button: t('pricing.premium.button'),
+    },
+  ];
 
   const handleGetStarted = () => {
     if (isAuthenticated) {
@@ -129,6 +135,18 @@ export const LandingPage: React.FC = () => {
 
   return (
     <Box>
+      {/* 頂部語言切換器 */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 16,
+          right: 16,
+          zIndex: 1000,
+        }}
+      >
+        <LanguageSwitcher variant="button" size="small" />
+      </Box>
+
       {/* Hero Section */}
       <Box
         sx={{
@@ -152,7 +170,7 @@ export const LandingPage: React.FC = () => {
                   lineHeight: 1.2,
                 }}
               >
-                檔案切分工具
+                {t('hero.title')}
               </Typography>
               <Typography
                 variant="h5"
@@ -162,11 +180,10 @@ export const LandingPage: React.FC = () => {
                   fontSize: { xs: '1.2rem', md: '1.5rem' },
                 }}
               >
-                智能檔案切分，讓數據整理變得簡單高效
+                {t('hero.subtitle')}
               </Typography>
               <Typography variant="body1" sx={{ mb: 4, fontSize: '1.1rem' }}>
-                專業的 CSV 檔案處理工具，按欄位內容自動切分檔案，
-                保持原始結構，一鍵完成大批量數據整理工作。
+                {t('hero.description')}
               </Typography>
               <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
                 <Button
@@ -184,7 +201,7 @@ export const LandingPage: React.FC = () => {
                   }}
                   startIcon={<PlayArrow />}
                 >
-                  立即開始使用
+                  {t('hero.startButton')}
                 </Button>
                 <Button
                   variant="outlined"
@@ -199,7 +216,7 @@ export const LandingPage: React.FC = () => {
                     '&:hover': { borderColor: 'white', bgcolor: 'rgba(255,255,255,0.1)' },
                   }}
                 >
-                  查看方案
+                  {t('common:nav.pricing')}
                 </Button>
               </Box>
             </Grid>
@@ -215,7 +232,7 @@ export const LandingPage: React.FC = () => {
                 }}
               >
                 <Typography variant="h6" gutterBottom color="primary" sx={{ fontWeight: 'bold' }}>
-                  操作流程演示
+                  {t('demo.title')}
                 </Typography>
                 <Stepper activeStep={demoStep} alternativeLabel sx={{ mb: 3 }}>
                   {steps.map((label) => (
@@ -231,11 +248,11 @@ export const LandingPage: React.FC = () => {
                     startIcon={<PlayArrow />}
                     sx={{ px: 3 }}
                   >
-                    下一步演示
+                    {t('demo.downloadZip')}
                   </Button>
                 </Box>
                 <Typography variant="body2" color="text.secondary" align="center">
-                  🎯 簡單三步驟，輕鬆完成檔案切分
+                  🎯 {t('demo.subtitle')}
                 </Typography>
               </Paper>
             </Grid>
@@ -250,9 +267,17 @@ export const LandingPage: React.FC = () => {
           component="h2"
           align="center"
           gutterBottom
-          sx={{ fontWeight: 'bold', mb: 6 }}
+          sx={{ fontWeight: 'bold', mb: 2 }}
         >
-          為什麼選擇我們的工具？
+          {t('features.title')}
+        </Typography>
+        <Typography
+          variant="h6"
+          align="center"
+          color="text.secondary"
+          sx={{ mb: 6 }}
+        >
+          {t('features.subtitle')}
         </Typography>
         <Grid container spacing={4}>
           {features.map((feature, index) => (
@@ -292,7 +317,7 @@ export const LandingPage: React.FC = () => {
             gutterBottom
             sx={{ fontWeight: 'bold', mb: 6 }}
           >
-            適用場景
+            {t('howItWorks.title')}
           </Typography>
           <Grid container spacing={3}>
             {useCases.map((useCase, index) => (
@@ -327,7 +352,7 @@ export const LandingPage: React.FC = () => {
           gutterBottom
           sx={{ fontWeight: 'bold', mb: 6 }}
         >
-          選擇適合的方案
+          {t('pricing.title')}
         </Typography>
         <Grid container spacing={4} justifyContent="center">
           {pricingPlans.map((plan, index) => (
@@ -342,7 +367,7 @@ export const LandingPage: React.FC = () => {
               >
                 {plan.popular && (
                   <Chip
-                    label="推薦方案"
+                    label={t('pricing.premium.popularLabel')}
                     color="primary"
                     sx={{
                       position: 'absolute',
@@ -359,11 +384,11 @@ export const LandingPage: React.FC = () => {
                   </Typography>
                   <Box sx={{ mb: 3 }}>
                     <Typography variant="h2" component="span" sx={{ fontWeight: 'bold' }}>
-                      {plan.price === 0 ? '免費' : `$${plan.price} USD`}
+                      {plan.price}
                     </Typography>
-                    {plan.price > 0 && (
+                    {plan.period && plan.price !== t('pricing.free.price') && (
                       <Typography variant="h6" component="span" color="text.secondary" sx={{ ml: 1 }}>
-                        /月
+                        {plan.period}
                       </Typography>
                     )}
                   </Box>
@@ -384,7 +409,7 @@ export const LandingPage: React.FC = () => {
                     onClick={handleGetStarted}
                     sx={{ py: 1.5, fontSize: '1.1rem' }}
                   >
-                    {plan.price === 0 ? '免費使用' : '開始試用'}
+                    {plan.button}
                   </Button>
                 </CardContent>
               </Card>
@@ -404,10 +429,10 @@ export const LandingPage: React.FC = () => {
       >
         <Container maxWidth="md">
           <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-            準備開始了嗎？
+            {t('cta.title')}
           </Typography>
           <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
-            立即註冊，免費使用檔案切分工具，體驗高效的數據處理流程
+            {t('cta.subtitle')}
           </Typography>
           <Button
             variant="contained"
@@ -424,7 +449,7 @@ export const LandingPage: React.FC = () => {
             }}
             startIcon={<GetApp />}
           >
-            免費開始使用
+            {t('cta.button')}
           </Button>
         </Container>
       </Box>
@@ -437,11 +462,11 @@ export const LandingPage: React.FC = () => {
         fullWidth
       >
         <DialogTitle sx={{ textAlign: 'center', fontWeight: 'bold', fontSize: '1.5rem' }}>
-          開始使用檔案切分工具
+          {t('authDialog.title')}
         </DialogTitle>
         <DialogContent sx={{ textAlign: 'center', py: 3 }}>
           <Typography variant="body1" sx={{ mb: 4 }}>
-            請選擇登入方式來使用我們的檔案處理工具
+            {t('authDialog.subtitle')}
           </Typography>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
@@ -452,7 +477,7 @@ export const LandingPage: React.FC = () => {
                 onClick={() => handleAuthChoice('login')}
                 sx={{ py: 2 }}
               >
-                已有帳號登入
+                {t('authDialog.existingAccount')}
               </Button>
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -463,14 +488,14 @@ export const LandingPage: React.FC = () => {
                 onClick={() => handleAuthChoice('register')}
                 sx={{ py: 2 }}
               >
-                註冊新帳號
+                {t('authDialog.newAccount')}
               </Button>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
           <Button onClick={() => setAuthDialogOpen(false)} color="inherit">
-            繼續瀏覽
+            {t('authDialog.continueBrowsing')}
           </Button>
         </DialogActions>
       </Dialog>

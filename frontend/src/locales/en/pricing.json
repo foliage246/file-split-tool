@@ -1,0 +1,68 @@
+{
+  "title": "Pricing Plans",
+  "subtitle": "Choose the plan that best fits your needs",
+  "plans": {
+    "free": {
+      "name": "Free Plan",
+      "price": "Free",
+      "description": "Perfect for occasional personal use",
+      "features": [
+        "5 processes per day",
+        "Max 10MB file size",
+        "CSV format support",
+        "Basic functionality"
+      ],
+      "limitations": [
+        "Limited daily usage",
+        "File size restrictions",
+        "CSV format only"
+      ],
+      "button": "Get Started"
+    },
+    "premium": {
+      "name": "Premium Plan",
+      "price": "$9.99",
+      "currency": "USD",
+      "period": "/month",
+      "popular": "Most Popular",
+      "description": "Ideal for professionals who need frequent file processing",
+      "features": [
+        "50 processes per day",
+        "Max 100MB file size",
+        "CSV, Excel, TXT support",
+        "Full functionality",
+        "Processing history"
+      ],
+      "button": "Upgrade Now"
+    }
+  },
+  "comparison": {
+    "title": "Feature Comparison",
+    "feature": "Feature",
+    "free": "Free Plan",
+    "premium": "Premium Plan",
+    "dailyProcessing": "Daily Processing",
+    "fileSize": "File Size Limit",
+    "formats": "Supported Formats",
+    "history": "Processing History",
+    "support": "Technical Support"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "q1": "How do I upgrade to premium?",
+    "a1": "Click the 'Upgrade Now' button and you'll be directed to a secure payment page to complete your subscription.",
+    "q2": "What are the advantages of the premium version?",
+    "a2": "Premium version offers more processing opportunities, larger file support, multiple format support, and processing history.",
+    "q3": "Can I cancel my subscription anytime?",
+    "a3": "Yes, you can cancel your subscription at any time and continue using until the end of your current billing cycle.",
+    "q4": "Is file processing secure?",
+    "a4": "We use encrypted transmission and secure storage, automatically deleting files after processing to ensure your data security."
+  },
+  "guarantee": {
+    "title": "Security Guarantee",
+    "dataPrivacy": "Data Privacy Protection",
+    "secureTransmission": "Encrypted Transmission",
+    "autoDelete": "Automatic Deletion",
+    "noStorage": "We don't store your files"
+  }
+}

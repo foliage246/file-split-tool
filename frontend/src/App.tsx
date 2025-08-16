@@ -3,12 +3,16 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import { SimpleAuthProvider } from './context/SimpleAuthContext';
+import { LanguageProvider } from './context/LanguageContext';
 import { AppLayout } from './components/Layout/AppLayout';
 import { LandingPage } from './pages/LandingPage';
 import { AppPage } from './pages/AppPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { PricingPage } from './pages/PricingPage';
+
+// 導入 i18n 配置
+import './i18n';
 
 // 創建 Material-UI 主題 - 優化桌面版
 const theme = createTheme({
@@ -122,11 +126,13 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <SimpleAuthProvider>
-        <Router>
-          <AppContent />
-        </Router>
-      </SimpleAuthProvider>
+      <LanguageProvider>
+        <SimpleAuthProvider>
+          <Router>
+            <AppContent />
+          </Router>
+        </SimpleAuthProvider>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }

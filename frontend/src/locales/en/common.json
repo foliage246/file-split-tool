@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Home",
+    "app": "Tool",
+    "pricing": "Pricing",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  },
+  "buttons": {
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "download": "Download",
+    "upload": "Upload",
+    "save": "Save",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "retry": "Retry"
+  },
+  "status": {
+    "loading": "Loading...",
+    "success": "Success",
+    "error": "Error",
+    "processing": "Processing...",
+    "completed": "Completed",
+    "failed": "Failed"
+  },
+  "errors": {
+    "networkError": "Network error, please try again later",
+    "serverError": "Server error",
+    "invalidInput": "Invalid input",
+    "fileTooBig": "File too large",
+    "invalidFormat": "Unsupported file format",
+    "uploadFailed": "Upload failed"
+  },
+  "footer": {
+    "copyright": "© 2025 File Split Tool. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "support": "Technical Support"
+  },
+  "language": {
+    "current": "English",
+    "switch": "Switch Language"
+  },
+  "user": {
+    "premium": "Premium",
+    "free": "Free",
+    "premiumMember": "Premium Member",
+    "freeMember": "Free Member",
+    "myFiles": "My Files",
+    "subscriptionManage": "Manage Subscription",
+    "upgradePlan": "Upgrade Plan",
+    "upgrade": "Upgrade"
+  }
+}

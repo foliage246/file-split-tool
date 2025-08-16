@@ -1,0 +1,55 @@
+{
+  "fileUpload": {
+    "title": "File Upload",
+    "dropZoneText": "Drag and drop files here, or click to select files",
+    "supportedFormats": "Supported Formats",
+    "fileSizeLimit": "File Size Limit",
+    "uploadButton": "Select File",
+    "uploadProgress": "Upload Progress",
+    "uploadSuccess": "File uploaded successfully",
+    "uploadError": "File upload failed"
+  },
+  "columnSelection": {
+    "title": "Select Split Column",
+    "subtitle": "Please select the column to split the file by",
+    "preview": "File Preview",
+    "selectColumn": "Select Column",
+    "selectedColumn": "Selected Column",
+    "uniqueValues": "Unique Values",
+    "estimatedFiles": "Estimated Files",
+    "confirmButton": "Confirm Split"
+  },
+  "processing": {
+    "title": "Processing File",
+    "subtitle": "Splitting file based on your selected column...",
+    "progress": "Processing Progress",
+    "currentStep": "Current Step",
+    "estimatedTime": "Estimated Time Remaining",
+    "success": "Processing Complete!",
+    "error": "Processing Failed",
+    "downloadReady": "Files ready for download"
+  },
+  "results": {
+    "title": "Processing Results",
+    "subtitle": "File splitting completed, you can download the results",
+    "totalFiles": "Total Files Generated",
+    "downloadZip": "Download ZIP File",
+    "downloadSize": "File Size",
+    "processAnother": "Process Another File",
+    "fileList": "File List"
+  },
+  "usage": {
+    "dailyUsage": "Daily Usage",
+    "remainingUses": "Remaining Uses",
+    "upgradePrompt": "Upgrade to premium for more processing opportunities",
+    "upgradeButton": "Upgrade Now"
+  },
+  "errors": {
+    "fileNotSupported": "Unsupported file format",
+    "fileTooLarge": "File exceeds size limit",
+    "dailyLimitReached": "Daily processing limit reached",
+    "processingFailed": "File processing failed",
+    "columnNotSelected": "Please select a split column",
+    "emptyFile": "File is empty or invalid"
+  }
+}
