@@ -1,4 +1,4 @@
-# 使用 Node.js 18 作為基礎鏡像
+# 使用 Node.js 18 作為基礎鏡像 - v2.0
 FROM node:18-alpine as builder
 
 # 設置工作目錄
