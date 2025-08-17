@@ -27,6 +27,7 @@ import {
   Security,
   Speed,
   TableChart,
+  ArrowBack,
 } from '@mui/icons-material';
 import { useAuth } from '../context/SimpleAuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -168,6 +169,23 @@ export const PricingPage: React.FC = () => {
         }}
       >
         <Container maxWidth="lg">
+          {/* Back button */}
+          <Box sx={{ mb: 4 }}>
+            <Button
+              startIcon={<ArrowBack />}
+              onClick={() => navigate('/')}
+              sx={{
+                color: 'white',
+                textTransform: 'none',
+                '&:hover': {
+                  bgcolor: 'rgba(255,255,255,0.1)',
+                },
+              }}
+            >
+              Back to Home
+            </Button>
+          </Box>
+          
           <Box sx={{ textAlign: 'center' }}>
             <Typography
               variant="h2"
