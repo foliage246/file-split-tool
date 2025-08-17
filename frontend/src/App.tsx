@@ -10,8 +10,6 @@ import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { PricingPage } from './pages/PricingPage';
 
-// 導入 i18n 配置
-import './i18n';
 
 // 創建 Material-UI 主題 - 優化桌面版
 const theme = createTheme({

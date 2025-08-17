@@ -16,12 +16,10 @@ import { FileUploadData, UsageLimits } from '../types';
 import { apiService, handleApiError } from '../services/api';
 import { useAuth } from '../context/SimpleAuthContext';
 import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 
 export const AppPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [uploadData, setUploadData] = useState<FileUploadData>({
     file: null,
@@ -32,9 +30,9 @@ export const AppPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   
   const steps = [
-    t('steps.upload'),
-    t('steps.selectColumn'), 
-    t('steps.processResults')
+    'Upload File',
+    'Select Column', 
+    'Process Results'
   ];
 
   // 檢查用戶是否已登入
@@ -135,10 +133,10 @@ export const AppPage: React.FC = () => {
       <Container maxWidth="xl">
         <Box sx={{ py: 4 }}>
           <Alert severity="warning" sx={{ mb: 3 }}>
-            {t('page.dailyLimitExhausted')}
+            Your daily processing quota has been exhausted.
             {!usageLimits.user_tier || usageLimits.user_tier === 'free' ? 
-              ` ${t('page.upgradeToPremium')}` : 
-              ` ${t('page.quotaResetTomorrow')}`
+              ' Upgrade to premium for more processing quota.' : 
+              ' Quota will reset tomorrow.'
             }
           </Alert>
         </Box>
@@ -156,7 +154,7 @@ export const AppPage: React.FC = () => {
           gutterBottom
           sx={{ fontWeight: 'bold', mb: 4, textAlign: 'center' }}
         >
-          {t('page.title')}
+          File Split Tool
         </Typography>
 
         {/* 步驟指示器 */}
@@ -183,11 +181,11 @@ export const AppPage: React.FC = () => {
             severity={usageLimits.daily_usage.remaining <= 2 ? "warning" : "info"} 
             sx={{ mb: 3 }}
           >
-            {t('page.dailyUsageRemaining')}: {usageLimits.daily_usage.remaining} / {usageLimits.daily_usage.limit}
+            Daily usage remaining: {usageLimits.daily_usage.remaining} / {usageLimits.daily_usage.limit}
             {usageLimits.user_tier === 'free' && usageLimits.daily_usage.remaining <= 2 && (
               <>
                 <br />
-                {t('page.upgradePromotion')}
+                Consider upgrading to premium for more processing quota and larger file support.
               </>
             )}
           </Alert>

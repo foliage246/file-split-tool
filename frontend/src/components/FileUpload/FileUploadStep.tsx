@@ -21,7 +21,6 @@ import {
 } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { StepProps, FileUploadData } from '../../types';
-import { useTranslation } from 'react-i18next';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -50,7 +49,6 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
   onDataChange,
   usageLimits,
 }) => {
-  const { t } = useTranslation();
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -64,14 +62,14 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
     // 檢查檔案類型
     const fileExtension = '.' + file.name.split('.').pop()?.toLowerCase();
     if (!supportedExtensions.includes(fileExtension)) {
-      setError(`${t('fileUpload.unsupportedFileType')}: ${supportedExtensions.join(', ')}`);
+      setError(`Unsupported file format. Supported formats: ${supportedExtensions.join(', ')}`);
       return;
     }
 
     // 檢查檔案大小
     const fileSizeMB = file.size / (1024 * 1024);
     if (fileSizeMB > maxSizeLimit) {
-      setError(`${t('fileUpload.fileTooLargeError')} ${maxSizeLimit}MB`);
+      setError(`File too large. Maximum supported ${maxSizeLimit}MB`);
       return;
     }
 
@@ -107,7 +105,7 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
 
   const handleNext = () => {
     if (!data.file) {
-      setError(t('errors.emptyFile'));
+      setError('Please select a file to upload');
       return;
     }
     onNext();
@@ -121,17 +119,17 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
   return (
     <Box>
       <Typography variant="h5" gutterBottom sx={{ mb: 3 }}>
-        {t('fileUpload.title')}
+        Step 1: Upload File
       </Typography>
 
       {/* 使用量提示 */}
       {usageLimits && (
         <Alert severity="info" sx={{ mb: 3 }}>
           <Typography variant="body2">
-            {t('page.dailyUsageRemaining')}: {usageLimits.daily_usage.remaining} / {usageLimits.daily_usage.limit}
+            Daily usage remaining: {usageLimits.daily_usage.remaining} / {usageLimits.daily_usage.limit}
           </Typography>
           <Typography variant="body2">
-            {t('fileUpload.maxFileSize')}: {usageLimits.file_limits.max_size_mb}MB
+            Maximum file size: {usageLimits.file_limits.max_size_mb}MB
           </Typography>
         </Alert>
       )}
@@ -154,13 +152,13 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
       >
         <CloudUpload sx={{ fontSize: 48, color: '#1976d2', mb: 2 }} />
         <Typography variant="h6" gutterBottom>
-          {t('fileUpload.dropZoneText')}
+          Drag and drop files here, or click to select files
         </Typography>
         <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
-          {t('fileUpload.supportedFormats')}: CSV, Excel (.xlsx, .xls), TXT
+          Supported Formats: CSV, Excel (.xlsx, .xls), TXT
         </Typography>
         <Typography variant="body2" color="textSecondary">
-          {t('fileUpload.maxFileSize')}: {maxSizeLimit}MB
+          Maximum file size: {maxSizeLimit}MB
         </Typography>
 
         <Button
@@ -170,7 +168,7 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
           sx={{ mt: 2 }}
           onClick={(e) => e.stopPropagation()}
         >
-          {t('fileUpload.uploadButton')}
+          Select File
           <VisuallyHiddenInput
             ref={fileInputRef}
             type="file"
@@ -208,7 +206,7 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
       {/* 支援格式說明 */}
       <Box sx={{ mb: 3 }}>
         <Typography variant="subtitle2" gutterBottom>
-          {t('fileUpload.supportedFormats')}：
+          Supported Formats:
         </Typography>
         <List dense>
           <ListItem>
@@ -216,8 +214,8 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
               <Info fontSize="small" />
             </ListItemIcon>
             <ListItemText
-              primary={t('fileUpload.csvFormat')}
-              secondary={t('fileUpload.csvDescription')}
+              primary="CSV Files (.csv)"
+              secondary="Support UTF-8, Big5, GB2312 and other encodings"
             />
           </ListItem>
           <ListItem>
@@ -225,8 +223,8 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
               <Info fontSize="small" />
             </ListItemIcon>
             <ListItemText
-              primary={t('fileUpload.excelFormat')}
-              secondary={t('fileUpload.excelDescription')}
+              primary="Excel Files (.xlsx, .xls)"
+              secondary="Microsoft Excel format"
             />
           </ListItem>
           <ListItem>
@@ -234,8 +232,8 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
               <Info fontSize="small" />
             </ListItemIcon>
             <ListItemText
-              primary={t('fileUpload.txtFormat')}
-              secondary={t('fileUpload.txtDescription')}
+              primary="Text Files (.txt)"
+              secondary="Plain text files, support multiple split formats"
             />
           </ListItem>
         </List>
@@ -249,7 +247,7 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
           disabled={!data.file}
           size="large"
         >
-          {t('fileUpload.nextStep')}
+          Next Step
         </Button>
       </Box>
     </Box>
