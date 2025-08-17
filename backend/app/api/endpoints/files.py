@@ -19,6 +19,7 @@ router = APIRouter()
 
 @router.post("/upload")
 async def upload_file(
+    background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
     column_name: str = Form(...),
     batch_size: Optional[int] = Form(None),
@@ -99,7 +100,6 @@ async def upload_file(
         await redis_client.expire(usage_key, 86400)  # 24小時過期
         
         # 啟動背景處理
-        background_tasks = BackgroundTasks()
         background_tasks.add_task(process_file_background, task_id, file, column_name, batch_size)
         
         return {
