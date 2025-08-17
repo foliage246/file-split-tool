@@ -1,13 +1,23 @@
 {
   "fileUpload": {
-    "title": "File Upload",
+    "title": "Step 1: Upload File",
     "dropZoneText": "Drag and drop files here, or click to select files",
     "supportedFormats": "Supported Formats",
     "fileSizeLimit": "File Size Limit",
+    "maxFileSize": "Maximum file size",
     "uploadButton": "Select File",
     "uploadProgress": "Upload Progress",
     "uploadSuccess": "File uploaded successfully",
-    "uploadError": "File upload failed"
+    "uploadError": "File upload failed",
+    "unsupportedFileType": "Unsupported file format. Supported formats",
+    "fileTooLargeError": "File too large. Maximum supported",
+    "nextStep": "Next Step",
+    "csvFormat": "CSV Files (.csv)",
+    "csvDescription": "Support UTF-8, Big5, GB2312 and other encodings",
+    "excelFormat": "Excel Files (.xlsx, .xls)",
+    "excelDescription": "Microsoft Excel format",
+    "txtFormat": "Text Files (.txt)", 
+    "txtDescription": "Plain text files, support multiple split formats"
   },
   "columnSelection": {
     "title": "Select Split Column",
@@ -51,5 +61,18 @@
     "processingFailed": "File processing failed",
     "columnNotSelected": "Please select a split column",
     "emptyFile": "File is empty or invalid"
+  },
+  "steps": {
+    "upload": "Upload File",
+    "selectColumn": "Select Column", 
+    "processResults": "Process Results"
+  },
+  "page": {
+    "title": "File Split Tool",
+    "dailyUsageRemaining": "Daily usage remaining",
+    "upgradePromotion": "Consider upgrading to premium for more processing quota and larger file support.",
+    "dailyLimitExhausted": "Your daily processing quota has been exhausted.",
+    "upgradeToPremium": "Upgrade to premium for more processing quota.",
+    "quotaResetTomorrow": "Quota will reset tomorrow."
   }
 }

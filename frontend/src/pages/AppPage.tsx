@@ -16,12 +16,12 @@ import { FileUploadData, UsageLimits } from '../types';
 import { apiService, handleApiError } from '../services/api';
 import { useAuth } from '../context/SimpleAuthContext';
 import { useNavigate } from 'react-router-dom';
-
-const steps = ['上傳檔案', '選擇欄位', '處理結果'];
+import { useTranslation } from 'react-i18next';
 
 export const AppPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation('app');
   const [activeStep, setActiveStep] = useState(0);
   const [uploadData, setUploadData] = useState<FileUploadData>({
     file: null,
@@ -30,6 +30,12 @@ export const AppPage: React.FC = () => {
   });
   const [usageLimits, setUsageLimits] = useState<UsageLimits | null>(null);
   const [error, setError] = useState<string | null>(null);
+  
+  const steps = [
+    t('steps.upload'),
+    t('steps.selectColumn'), 
+    t('steps.processResults')
+  ];
 
   // 檢查用戶是否已登入
   useEffect(() => {
@@ -129,10 +135,10 @@ export const AppPage: React.FC = () => {
       <Container maxWidth="xl">
         <Box sx={{ py: 4 }}>
           <Alert severity="warning" sx={{ mb: 3 }}>
-            您今日的處理次數已用完。
+            {t('page.dailyLimitExhausted')}
             {!usageLimits.user_tier || usageLimits.user_tier === 'free' ? 
-              '升級到付費版可獲得更多處理次數。' : 
-              '明日會重新計算使用次數。'
+              ` ${t('page.upgradeToPremium')}` : 
+              ` ${t('page.quotaResetTomorrow')}`
             }
           </Alert>
         </Box>
@@ -150,7 +156,7 @@ export const AppPage: React.FC = () => {
           gutterBottom
           sx={{ fontWeight: 'bold', mb: 4, textAlign: 'center' }}
         >
-          檔案切分工具
+          {t('page.title')}
         </Typography>
 
         {/* 步驟指示器 */}
@@ -177,11 +183,11 @@ export const AppPage: React.FC = () => {
             severity={usageLimits.daily_usage.remaining <= 2 ? "warning" : "info"} 
             sx={{ mb: 3 }}
           >
-            今日剩餘處理次數: {usageLimits.daily_usage.remaining} / {usageLimits.daily_usage.limit}
+            {t('page.dailyUsageRemaining')}: {usageLimits.daily_usage.remaining} / {usageLimits.daily_usage.limit}
             {usageLimits.user_tier === 'free' && usageLimits.daily_usage.remaining <= 2 && (
               <>
                 <br />
-                考慮升級到付費版以獲得更多處理次數和更大的檔案支援。
+                {t('page.upgradePromotion')}
               </>
             )}
           </Alert>
