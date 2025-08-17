@@ -1,4 +1,4 @@
-# 簡化的單階段構建
+# 完全清除緩存的構建
 FROM node:18-alpine
 
 # 設定工作目錄
@@ -10,11 +10,16 @@ RUN apk add --no-cache curl
 # 複製前端代碼
 COPY frontend/ ./
 
-# 清除緩存並安裝依賴
+# 完全清除所有緩存
+RUN rm -rf node_modules package-lock.json dist .vite
 RUN npm cache clean --force
-RUN npm ci --no-cache
+RUN npm cache verify
 
-# 構建前端
+# 安裝依賴（不使用緩存）
+RUN npm ci --no-cache --prefer-offline=false
+
+# 構建前端（添加時間戳避免緩存）
+ENV BUILD_VERSION=v3.0.0-$(date +%s)
 RUN npm run build
 
 # 暴露端口
