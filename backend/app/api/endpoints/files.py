@@ -314,6 +314,8 @@ async def process_file_background(
     redis_client = get_redis_client()
     processor = FileProcessor()
     
+    print(f"🚀 開始處理任務: {task_id}, 檔案: {file.filename}, 欄位: {column_name}")
+    
     try:
         # 更新任務狀態為處理中
         task_data = await redis_client.get(f"task:{task_id}")
@@ -343,7 +345,8 @@ async def process_file_background(
             )
         else:
             # 處理失敗
-            task_dict["status"] = TaskStatus.FAILED
+            print(f"❌ 處理失敗: {result}")
+            task_dict["status"] = TaskStatus.ERROR
             task_dict["error_message"] = result.get("error", "處理失敗")
             task_dict["updated_at"] = datetime.now().isoformat()
         
@@ -356,32 +359,25 @@ async def process_file_background(
         
     except Exception as e:
         # 處理異常
-        task_data = await redis_client.get(f"task:{task_id}")
-        if task_data:
-            task_dict = json.loads(task_data)
-            task_dict["status"] = TaskStatus.FAILED
-            task_dict["error_message"] = str(e)
-            task_dict["updated_at"] = datetime.now().isoformat()
-            
-            await redis_client.setex(
-                f"task:{task_id}",
-                3600,
-                json.dumps(task_dict, default=str)
-            )
+        print(f"💥 背景任務異常: {task_id}, 錯誤: {str(e)}")
+        
+        try:
+            task_data = await redis_client.get(f"task:{task_id}")
+            if task_data:
+                task_dict = json.loads(task_data)
+                task_dict["status"] = TaskStatus.ERROR
+                task_dict["error_message"] = str(e)
+                task_dict["updated_at"] = datetime.now().isoformat()
+                
+                await redis_client.setex(
+                    f"task:{task_id}",
+                    3600,
+                    json.dumps(task_dict, default=str)
+                )
+        except Exception as redis_error:
+            print(f"💥 Redis 更新錯誤: {str(redis_error)}")
     
     finally:
         # 清理資源
         processor.cleanup()
 
-
-# 這個函數需要從認證模組導入
-async def get_current_user() -> User:
-    """獲取當前用戶（待實現）"""
-    # 這裡應該實現 JWT 認證邏輯
-    # 暫時返回一個示例用戶
-    return User(
-        user_id="example_user",
-        email="user@example.com",
-        is_premium=False,
-        stripe_customer_id=None
-    )
