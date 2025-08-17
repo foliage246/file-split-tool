@@ -65,7 +65,7 @@ export const LandingPage: React.FC = () => {
             gutterBottom
             sx={{ fontWeight: 'bold', mb: 4 }}
           >
-            Split Files by Column Values
+            Professional File Split Tool
           </Typography>
           
           <Typography
@@ -74,8 +74,8 @@ export const LandingPage: React.FC = () => {
             color="textSecondary"
             sx={{ mb: 6, maxWidth: '600px', mx: 'auto' }}
           >
-            Easily split CSV, Excel, and TXT files based on column values. 
-            Free tier supports CSV files, premium supports all formats.
+            Advanced file splitting solution for CSV, Excel, and TXT files. 
+            Split large files by column values with professional-grade accuracy.
           </Typography>
 
           <Box sx={{ mb: 6 }}>
@@ -90,7 +90,7 @@ export const LandingPage: React.FC = () => {
                 mr: 2,
               }}
             >
-              Get Started
+              Start Splitting Files
             </Button>
             <Button
               variant="outlined"
