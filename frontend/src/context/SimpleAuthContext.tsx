@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config/api';
 
 interface User {
   user_id: string;
@@ -60,7 +61,8 @@ export const SimpleAuthProvider: React.FC<SimpleAuthProviderProps> = ({ children
     setError(null);
 
     try {
-      const response = await fetch('/api/v1/auth/login', {
+      console.log('🚀 Login request to:', `${API_BASE_URL}/auth/login`);
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +107,8 @@ export const SimpleAuthProvider: React.FC<SimpleAuthProviderProps> = ({ children
     setError(null);
 
     try {
-      const response = await fetch('/api/v1/auth/register', {
+      console.log('🚀 Register request to:', `${API_BASE_URL}/auth/register`);
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
