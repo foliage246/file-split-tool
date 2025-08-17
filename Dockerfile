@@ -16,6 +16,9 @@ RUN rm -rf node_modules dist .vite
 # 安裝依賴
 RUN npm install
 
+# 設置生產環境變數
+ENV NODE_ENV=production
+
 # 構建前端
 RUN npm run build
 
