@@ -41,3 +41,12 @@ console.log('Is production:', import.meta.env.PROD);
 console.log('Using API_BASE_URL:', API_BASE_URL);
 console.log('Current hostname:', typeof window !== 'undefined' ? window.location.hostname : 'server-side');
 console.log('All env vars:', import.meta.env);
+
+// 強制驗證 URL 正確性
+if (typeof window !== 'undefined' && API_BASE_URL.includes('file-split-tool-production')) {
+  console.error('❌ CRITICAL ERROR: API_BASE_URL is using frontend domain!');
+  console.error('Expected: gleaming-liberation-production');
+  console.error('Got:', API_BASE_URL);
+} else {
+  console.log('✅ API_BASE_URL looks correct');
+}
