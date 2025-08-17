@@ -12,6 +12,16 @@ export default defineConfig(({ mode }) => {
       // 確保 VITE_ 開頭的環境變數能在建構時使用
       'import.meta.env.VITE_API_BASE_URL': JSON.stringify(env.VITE_API_BASE_URL || '/api/v1'),
     },
+    build: {
+      // 強制緩存破壞
+      rollupOptions: {
+        output: {
+          entryFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+          chunkFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+          assetFileNames: `assets/[name]-[hash]-${Date.now()}.[ext]`
+        }
+      }
+    },
     preview: {
     host: '0.0.0.0',
     port: parseInt(process.env.PORT || '8080'),
