@@ -41,7 +41,7 @@ i18n
     resources,
     lng: 'zh', // 明確設定預設語言
     fallbackLng: 'zh',
-    debug: false,
+    debug: true, // 啟用調試模式
     
     // 簡化的語言檢測選項
     detection: {
@@ -69,6 +69,14 @@ i18n
     supportedLngs: ['zh', 'en'],
     load: 'languageOnly',
     cleanCode: true,
+  })
+  .then(() => {
+    console.log('i18n initialized successfully');
+    console.log('Current language:', i18n.language);
+    console.log('Available resources:', i18n.getResourceBundle(i18n.language, 'app'));
+  })
+  .catch((error) => {
+    console.error('i18n initialization failed:', error);
   });
 
 export default i18n;

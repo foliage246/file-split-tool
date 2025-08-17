@@ -1,13 +1,23 @@
 {
   "fileUpload": {
-    "title": "檔案上傳",
+    "title": "步驟 1: 上傳檔案",
     "dropZoneText": "將檔案拖放到此處，或點擊選擇檔案",
     "supportedFormats": "支援格式",
     "fileSizeLimit": "檔案大小限制",
+    "maxFileSize": "最大檔案大小",
     "uploadButton": "選擇檔案",
     "uploadProgress": "上傳進度",
     "uploadSuccess": "檔案上傳成功",
-    "uploadError": "檔案上傳失敗"
+    "uploadError": "檔案上傳失敗",
+    "unsupportedFileType": "不支援的檔案類型。支援格式",
+    "fileTooLargeError": "檔案過大。最大支援",
+    "nextStep": "下一步",
+    "csvFormat": "CSV 檔案 (.csv)",
+    "csvDescription": "支援 UTF-8、Big5、GB2312 等多種編碼",
+    "excelFormat": "Excel 檔案 (.xlsx, .xls)",
+    "excelDescription": "Microsoft Excel 格式",
+    "txtFormat": "文字檔 (.txt)",
+    "txtDescription": "純文字檔案，支援各種分隔符"
   },
   "columnSelection": {
     "title": "選擇切分欄位",
@@ -51,5 +61,18 @@
     "processingFailed": "檔案處理失敗",
     "columnNotSelected": "請選擇一個切分欄位",
     "emptyFile": "檔案為空或無效"
+  },
+  "steps": {
+    "upload": "上傳檔案",
+    "selectColumn": "選擇欄位",
+    "processResults": "處理結果"
+  },
+  "page": {
+    "title": "檔案切分工具",
+    "dailyUsageRemaining": "今日剩餘處理次數",
+    "upgradePromotion": "考慮升級到付費版以獲得更多處理次數和更大的檔案支援。",
+    "dailyLimitExhausted": "您今日的處理次數已用完。",
+    "upgradeToPremium": "升級到付費版可獲得更多處理次數。",
+    "quotaResetTomorrow": "明日會重新計算使用次數。"
   }
 }
