@@ -378,6 +378,7 @@ async def process_file_background(
             print(f"💥 Redis 更新錯誤: {str(redis_error)}")
     
     finally:
-        # 清理資源
-        processor.cleanup()
+        # 清理資源（注意：不要過早清理，否則下載時會找不到檔案）
+        # processor.cleanup()  # 暫時不清理，讓檔案可以被下載
+        pass
 
