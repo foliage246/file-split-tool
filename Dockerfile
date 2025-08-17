@@ -1,15 +1,25 @@
 # 多階段構建 - 同時支援前端和後端
+# BUILD_VERSION: 2024-08-17-v2
 
 # 第一階段：構建前端
 FROM node:18-alpine AS frontend-builder
 WORKDIR /app/frontend
+
+# 清除 npm 緩存並安裝依賴
 COPY frontend/package*.json ./
-RUN npm install
+RUN npm cache clean --force
+RUN npm ci --no-cache
+
+# 複製源碼並構建
 COPY frontend/ ./
 RUN npm run build
 
 # 第二階段：設定後端和前端服務
 FROM python:3.11-slim
+
+# 設定構建變數強制重建
+ENV BUILD_TIMESTAMP=2024-08-17-15:30:00
+ENV APP_VERSION=v2.0.0
 
 # 安裝系統依賴
 RUN apt-get update && apt-get install -y \
