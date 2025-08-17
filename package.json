@@ -1,0 +1,12 @@
+{
+  "name": "file-split-tool-frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "cd frontend && npm run dev",
+    "build": "cd frontend && npm ci && npm run build",
+    "preview": "cd frontend && npm run preview",
+    "start": "npx serve frontend/dist -p $PORT"
+  }
+}
