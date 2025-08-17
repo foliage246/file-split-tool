@@ -17,12 +17,8 @@ RUN npm ci --no-cache
 # 構建前端
 RUN npm run build
 
-# 安裝簡單的 HTTP 服務器
-RUN npm install -g serve
-
 # 暴露端口
-EXPOSE 3000
+EXPOSE 4173
 
-# 設定默認端口並啟動
-ENV PORT=3000
-CMD ["sh", "-c", "serve -s dist -p ${PORT:-3000} --host 0.0.0.0"]
+# 使用 Vite 預覽服務器
+CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "4173"]
