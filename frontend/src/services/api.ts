@@ -15,8 +15,11 @@ class ApiService {
   private api: AxiosInstance;
 
   constructor() {
+    // 從環境變數讀取後端API URL，fallback到相對路徑
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/v1';
+    
     this.api = axios.create({
-      baseURL: '/api/v1',
+      baseURL: API_BASE_URL,
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',
