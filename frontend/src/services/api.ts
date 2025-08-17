@@ -18,6 +18,10 @@ class ApiService {
     // 從環境變數讀取後端API URL，fallback到相對路徑
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/v1';
     
+    // 調試信息
+    console.log('API_BASE_URL:', API_BASE_URL);
+    console.log('Environment variables:', import.meta.env);
+    
     this.api = axios.create({
       baseURL: API_BASE_URL,
       timeout: 30000,
