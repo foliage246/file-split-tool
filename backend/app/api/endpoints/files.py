@@ -70,6 +70,13 @@ async def upload_file(
                 detail=f"已達每日處理限制。{'付費版' if user.is_premium else '免費版'}每日可處理 {daily_limit} 個檔案"
             )
         
+        # 檢查必需參數
+        if not column_name:
+            raise HTTPException(
+                status_code=400,
+                detail="必須指定要切分的欄位名稱 (column_name)"
+            )
+        
         # 重置檔案指針
         await file.seek(0)
         
@@ -83,7 +90,6 @@ async def upload_file(
             filename=file.filename,
             file_size_mb=round(file_size_mb, 2),
             column_name=column_name,
-            batch_size=batch_size,
             status=TaskStatus.PENDING,
             created_at=datetime.now()
         )
