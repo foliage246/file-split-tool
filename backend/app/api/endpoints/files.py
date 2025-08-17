@@ -1,4 +1,4 @@
-from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, BackgroundTasks
+from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, BackgroundTasks, Form
 from fastapi.responses import FileResponse
 from typing import Optional
 import os
@@ -20,8 +20,8 @@ router = APIRouter()
 @router.post("/upload")
 async def upload_file(
     file: UploadFile = File(...),
-    column_name: str = None,
-    batch_size: Optional[int] = None,
+    column_name: str = Form(...),
+    batch_size: Optional[int] = Form(None),
     user: User = Depends(get_current_user),
     redis_client = Depends(get_redis_client)
 ):
@@ -68,13 +68,6 @@ async def upload_file(
             raise HTTPException(
                 status_code=429,
                 detail=f"已達每日處理限制。{'付費版' if user.is_premium else '免費版'}每日可處理 {daily_limit} 個檔案"
-            )
-        
-        # 檢查必需參數
-        if not column_name:
-            raise HTTPException(
-                status_code=400,
-                detail="必須指定要切分的欄位名稱 (column_name)"
             )
         
         # 重置檔案指針
