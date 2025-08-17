@@ -16,9 +16,6 @@ class ApiService {
   private api: AxiosInstance;
 
   constructor() {
-    // 使用配置文件中的 API_BASE_URL
-    console.log('Using API_BASE_URL:', API_BASE_URL);
-    
     this.api = axios.create({
       baseURL: API_BASE_URL,
       timeout: 30000,
@@ -27,21 +24,13 @@ class ApiService {
       },
     });
 
-    // 請求攔截器 - 添加認證 token 和調試
+    // 請求攔截器 - 添加認證 token
     this.api.interceptors.request.use(
       (config) => {
         const token = localStorage.getItem('access_token');
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
-        
-        // 調試信息
-        console.log('=== API Request Debug ===');
-        console.log('Request URL:', config.url);
-        console.log('Base URL:', config.baseURL);
-        console.log('Full URL:', `${config.baseURL}${config.url}`);
-        console.log('Method:', config.method);
-        
         return config;
       },
       (error) => Promise.reject(error)

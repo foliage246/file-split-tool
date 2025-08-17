@@ -4,6 +4,7 @@ from typing import Optional
 import os
 import json
 import uuid
+import logging
 from datetime import datetime
 
 from ...core.config import settings
@@ -15,6 +16,7 @@ from ...models.task import TaskStatus, ProcessingTask
 from ...models.user import User
 
 router = APIRouter()
+logger = logging.getLogger(__name__)
 
 
 @router.post("/upload")
@@ -27,16 +29,20 @@ async def upload_file(
     redis_client = Depends(get_redis_client)
 ):
     """
-    上傳檔案並開始處理
+    上傳檔案並開始處理任務
+    
+    支援格式：CSV, Excel (.xlsx, .xls), TXT
+    免費用戶：5 檔案/日，10MB 限制，僅 CSV
+    付費用戶：50 檔案/日，100MB 限制，支援所有格式
     
     Args:
         file: 上傳的檔案
-        column_name: 要切分的欄位名稱
-        batch_size: 每個批次的最大行數（可選）
-        user: 當前用戶
+        column_name: 要進行分割的欄位名稱
+        batch_size: 每個批次的最大行數（可選，未實現）
+        user: 當前認證用戶
     
     Returns:
-        任務 ID 和初始狀態
+        任務 ID 和狀態，用於後續查詢處理進度
     """
     try:
         # 檢查檔案類型
@@ -305,16 +311,21 @@ async def process_file_background(
     """
     背景處理檔案切分任務
     
+    此函數在背景執行，不會阻塞 API 響應。
+    處理流程：
+    1. 將任務狀態更新為 PROCESSING
+    2. 調用 FileProcessor 處理檔案分割
+    3. 將結果保存到 Redis
+    4. 更新任務狀態為 COMPLETED 或 ERROR
+    
     Args:
-        task_id: 任務 ID
-        file: 上傳的檔案
-        column_name: 要切分的欄位名稱
-        batch_size: 每個批次的最大行數（可選）
+        task_id: 唯一任務識別符
+        file: 已上傳的檔案對象
+        column_name: 用於分割的欄位名稱
+        batch_size: 預留參數，目前未使用
     """
     redis_client = get_redis_client()
     processor = FileProcessor()
-    
-    print(f"🚀 開始處理任務: {task_id}, 檔案: {file.filename}, 欄位: {column_name}")
     
     try:
         # 更新任務狀態為處理中
@@ -345,7 +356,6 @@ async def process_file_background(
             )
         else:
             # 處理失敗
-            print(f"❌ 處理失敗: {result}")
             task_dict["status"] = TaskStatus.ERROR
             task_dict["error_message"] = result.get("error", "處理失敗")
             task_dict["updated_at"] = datetime.now().isoformat()
@@ -359,7 +369,7 @@ async def process_file_background(
         
     except Exception as e:
         # 處理異常
-        print(f"💥 背景任務異常: {task_id}, 錯誤: {str(e)}")
+        logger.error(f"背景任務處理失敗: {task_id}, 錯誤: {str(e)}")
         
         try:
             task_data = await redis_client.get(f"task:{task_id}")
@@ -375,10 +385,10 @@ async def process_file_background(
                     json.dumps(task_dict, default=str)
                 )
         except Exception as redis_error:
-            print(f"💥 Redis 更新錯誤: {str(redis_error)}")
+            logger.error(f"Redis 更新錯誤: {str(redis_error)}")
     
     finally:
-        # 清理資源（注意：不要過早清理，否則下載時會找不到檔案）
-        # processor.cleanup()  # 暫時不清理，讓檔案可以被下載
+        # 清理資源會在 1 小時後由 Redis TTL 自動處理
+        # 避免過早清理導致下載失敗
         pass
 

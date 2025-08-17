@@ -61,7 +61,6 @@ export const SimpleAuthProvider: React.FC<SimpleAuthProviderProps> = ({ children
     setError(null);
 
     try {
-      console.log('🚀 Login request to:', `${API_BASE_URL}/auth/login`);
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: {
@@ -107,7 +106,6 @@ export const SimpleAuthProvider: React.FC<SimpleAuthProviderProps> = ({ children
     setError(null);
 
     try {
-      console.log('🚀 Register request to:', `${API_BASE_URL}/auth/register`);
       const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
