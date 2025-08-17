@@ -124,6 +124,14 @@ export const LoginPage: React.FC = () => {
               Sign In
             </LoadingButton>
 
+            <Box sx={{ textAlign: 'center', mb: 2 }}>
+              <RouterLink to="/forgot-password" style={{ textDecoration: 'none' }}>
+                <Button variant="text" size="small" sx={{ textTransform: 'none' }}>
+                  Forgot your password?
+                </Button>
+              </RouterLink>
+            </Box>
+
             <Box sx={{ textAlign: 'center' }}>
               <Typography variant="body2">
                 Don't have an account?{' '}

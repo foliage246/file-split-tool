@@ -8,6 +8,8 @@ import { AppPage } from './pages/AppPage';
 import { LoginPage } from './pages/LoginPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { PricingPage } from './pages/PricingPage';
+import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
+import { ResetPasswordPage } from './pages/ResetPasswordPage';
 
 
 // 創建 Material-UI 主題 - 優化桌面版
@@ -159,6 +161,8 @@ const AppContent: React.FC = () => {
       {/* 登入和註冊頁面不使用 AppLayout */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/reset-password" element={<ResetPasswordPage />} />
       
       {/* App page with unified design */}
       <Route path="/app" element={<AppPage />} />

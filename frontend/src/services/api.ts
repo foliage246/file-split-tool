@@ -3,6 +3,10 @@ import {
   AuthResponse,
   LoginRequest,
   RegisterRequest,
+  ForgotPasswordRequest,
+  ForgotPasswordResponse,
+  ResetPasswordRequest,
+  ResetPasswordResponse,
   FileUploadResponse,
   TaskStatus,
   UsageLimits,
@@ -68,6 +72,18 @@ class ApiService {
 
   async getCurrentUser(): Promise<any> {
     const response = await this.api.get('/auth/me');
+    return response.data;
+  }
+
+  // Forgot Password
+  async forgotPassword(data: ForgotPasswordRequest): Promise<ForgotPasswordResponse> {
+    const response: AxiosResponse<ForgotPasswordResponse> = await this.api.post('/auth/forgot-password', data);
+    return response.data;
+  }
+
+  // Reset Password
+  async resetPassword(data: ResetPasswordRequest): Promise<ResetPasswordResponse> {
+    const response: AxiosResponse<ResetPasswordResponse> = await this.api.post('/auth/reset-password', data);
     return response.data;
   }
 
