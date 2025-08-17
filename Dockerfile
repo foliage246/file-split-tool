@@ -21,7 +21,8 @@ RUN npm run build
 RUN npm install -g serve
 
 # 暴露端口
-EXPOSE $PORT
+EXPOSE 3000
 
-# 啟動命令
-CMD ["sh", "-c", "serve -s dist -p $PORT"]
+# 設定默認端口並啟動
+ENV PORT=3000
+CMD ["sh", "-c", "serve -s dist -p ${PORT:-3000} --host 0.0.0.0"]
