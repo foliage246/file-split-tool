@@ -1,24 +1,10 @@
-// API 配置
-const getApiBaseUrl = (): string => {
-  // 優先使用 Railway 環境變數
-  if (typeof window !== 'undefined' && window.location.hostname.includes('railway.app')) {
-    return 'https://gleaming-liberation-production-852d.up.railway.app/api/v1';
-  }
-  
-  // 開發環境使用環境變數
-  const envUrl = import.meta.env.VITE_API_BASE_URL;
-  if (envUrl) {
-    return envUrl;
-  }
-  
-  // 本地開發 fallback
-  return '/api/v1';
-};
-
-export const API_BASE_URL = getApiBaseUrl();
+// API 配置 - 直接根據環境模式決定
+export const API_BASE_URL = import.meta.env.PROD 
+  ? 'https://gleaming-liberation-production-852d.up.railway.app/api/v1'  // 生產環境直接硬編碼
+  : '/api/v1';  // 開發環境使用相對路徑
 
 // 調試信息
-console.log('API_BASE_URL:', API_BASE_URL);
-console.log('hostname:', typeof window !== 'undefined' ? window.location.hostname : 'server-side');
-console.log('VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
-console.log('All env vars:', import.meta.env);
+console.log('Environment mode:', import.meta.env.MODE);
+console.log('Is production:', import.meta.env.PROD);
+console.log('Using API_BASE_URL:', API_BASE_URL);
+console.log('Current hostname:', typeof window !== 'undefined' ? window.location.hostname : 'server-side');
