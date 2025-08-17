@@ -85,24 +85,21 @@ export const PricingPage: React.FC = () => {
   ];
 
   useEffect(() => {
+    // Always use English defaultPlans to ensure no Chinese content
+    setPlans(defaultPlans);
     if (isAuthenticated) {
       fetchPricingData();
-    } else {
-      setPlans(defaultPlans);
     }
   }, [isAuthenticated]);
 
   const fetchPricingData = async () => {
     try {
-      const [pricingData, subscriptionData] = await Promise.all([
-        apiService.getPricing().catch(() => ({ plans: defaultPlans, payment_methods: [] })),
-        apiService.getSubscriptionStatus().catch(() => null),
-      ]);
-      
-      setPlans(pricingData.plans.length > 0 ? pricingData.plans : defaultPlans);
+      const subscriptionData = await apiService.getSubscriptionStatus().catch(() => null);
       setSubscription(subscriptionData);
+      // Always use defaultPlans for pricing to ensure English content
+      setPlans(defaultPlans);
     } catch (err) {
-      // Ignore errors and use default data
+      // Always use default English plans
       setPlans(defaultPlans);
     }
   };

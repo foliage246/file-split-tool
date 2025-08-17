@@ -83,12 +83,15 @@ export interface SubscriptionInfo {
 }
 
 export interface PricingPlan {
+  id: string;
   name: string;
   price: number;
   currency: string;
   interval: string;
+  description: string;
   features: string[];
   limitations: string[];
+  popular: boolean;
 }
 
 // UI 相關類型定義
