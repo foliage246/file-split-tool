@@ -10,17 +10,14 @@ import {
   PricingPlan,
   ApiError,
 } from '../types';
+import { API_BASE_URL } from '../config/api';
 
 class ApiService {
   private api: AxiosInstance;
 
   constructor() {
-    // 從環境變數讀取後端API URL，fallback到相對路徑
-    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api/v1';
-    
-    // 調試信息
-    console.log('API_BASE_URL:', API_BASE_URL);
-    console.log('Environment variables:', import.meta.env);
+    // 使用配置文件中的 API_BASE_URL
+    console.log('Using API_BASE_URL:', API_BASE_URL);
     
     this.api = axios.create({
       baseURL: API_BASE_URL,
