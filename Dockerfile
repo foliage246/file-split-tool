@@ -19,7 +19,7 @@ RUN npm cache verify
 RUN npm ci --no-cache --prefer-offline=false
 
 # 構建前端（添加時間戳避免緩存）
-ENV BUILD_VERSION=v3.0.0-$(date +%s)
+ENV BUILD_VERSION=v3.0.0
 RUN npm run build
 
 # 暴露端口
