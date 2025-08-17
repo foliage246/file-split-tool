@@ -61,21 +61,23 @@ export const LoginPage: React.FC = () => {
   const displayError = formError || error;
 
   return (
-    <Container maxWidth="sm">
+    <Box sx={{ minHeight: '100vh', display: 'flex', bgcolor: '#fafafa' }}>
+      {/* Left side: Login form */}
       <Box
         sx={{
-          minHeight: '100vh',
+          flex: { xs: 1, md: 0.6 },
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          p: 4,
         }}
       >
-        <Paper elevation={3} sx={{ p: 4, width: '100%' }}>
-          <Typography variant="h4" component="h1" gutterBottom align="center">
+        <Paper elevation={3} sx={{ p: 6, width: '100%', maxWidth: 500, borderRadius: 3 }}>
+          <Typography variant="h4" component="h1" gutterBottom align="center" sx={{ fontWeight: 'bold' }}>
             Login
           </Typography>
           
-          <Typography variant="body2" color="textSecondary" align="center" sx={{ mb: 3 }}>
+          <Typography variant="body1" color="textSecondary" align="center" sx={{ mb: 4 }}>
             Sign in to access the file split tool
           </Typography>
 
@@ -143,6 +145,57 @@ export const LoginPage: React.FC = () => {
           </Box>
         </Paper>
       </Box>
-    </Container>
+
+      {/* Right side: Product highlights */}
+      <Box
+        sx={{
+          flex: 1,
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+          p: 6,
+          display: { xs: 'none', md: 'flex' },
+          flexDirection: 'column',
+          justifyContent: 'center',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <Box sx={{ position: 'relative', zIndex: 1 }}>
+          <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
+            Welcome Back!
+          </Typography>
+          <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
+            Continue your file processing journey
+          </Typography>
+          <Box sx={{ mb: 4 }}>
+            <Typography variant="body1" sx={{ mb: 2, opacity: 0.9 }}>
+              • Process multiple file formats
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 2, opacity: 0.9 }}>
+              • Fast and secure file splitting
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 2, opacity: 0.9 }}>
+              • Track your usage and history
+            </Typography>
+            <Typography variant="body1" sx={{ mb: 2, opacity: 0.9 }}>
+              • Upgrade for premium features
+            </Typography>
+          </Box>
+        </Box>
+        {/* Background decoration */}
+        <Box
+          sx={{
+            position: 'absolute',
+            left: -100,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            width: 300,
+            height: 300,
+            borderRadius: '50%',
+            bgcolor: 'rgba(255,255,255,0.1)',
+          }}
+        />
+      </Box>
+    </Box>
   );
 };

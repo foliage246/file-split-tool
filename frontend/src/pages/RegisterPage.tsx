@@ -33,22 +33,22 @@ export const RegisterPage: React.FC = () => {
 
   const validateForm = () => {
     if (!formData.email || !formData.password || !formData.confirmPassword) {
-      setFormError('請填寫所有欄位');
+      setFormError('Please fill in all fields');
       return false;
     }
 
     if (!formData.email.includes('@')) {
-      setFormError('請輸入有效的電子郵件地址');
+      setFormError('Please enter a valid email address');
       return false;
     }
 
     if (formData.password.length < 6) {
-      setFormError('密碼長度至少需要 6 個字元');
+      setFormError('Password must be at least 6 characters long');
       return false;
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setFormError('密碼確認不匹配');
+      setFormError('Password confirmation does not match');
       return false;
     }
 
@@ -72,11 +72,11 @@ export const RegisterPage: React.FC = () => {
 
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex' }}>
-      {/* 左側：產品亮點 */}
+      {/* Left side: Product highlights */}
       <Box
         sx={{
           flex: 1,
-          bgcolor: '#2e7d32',
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
           p: 6,
           display: { xs: 'none', md: 'flex' },
@@ -88,31 +88,31 @@ export const RegisterPage: React.FC = () => {
       >
         <Box sx={{ position: 'relative', zIndex: 1 }}>
           <Typography variant="h3" gutterBottom sx={{ fontWeight: 'bold' }}>
-            立即開始使用
+            Get Started Today
           </Typography>
           <Typography variant="h6" sx={{ mb: 4, opacity: 0.9 }}>
-            免費註冊，馬上體驗強大的檔案切分功能
+            Free registration to experience powerful file splitting features
           </Typography>
           <Box sx={{ mb: 4 }}>
             <Typography variant="body1" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
               <CheckCircle sx={{ mr: 2 }} />
-              完全免費，無需信用卡
+              Completely free, no credit card required
             </Typography>
             <Typography variant="body1" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
               <CheckCircle sx={{ mr: 2 }} />
-              每日 5 次免費處理額度
+              5 free processing quotas daily
             </Typography>
             <Typography variant="body1" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
               <CheckCircle sx={{ mr: 2 }} />
-              支援 10MB CSV 檔案上傳
+              Support 10MB CSV file uploads
             </Typography>
             <Typography variant="body1" sx={{ mb: 2, display: 'flex', alignItems: 'center' }}>
               <CheckCircle sx={{ mr: 2 }} />
-              立即開始，30秒完成註冊
+              Start immediately, complete registration in 30 seconds
             </Typography>
           </Box>
           <Typography variant="body2" sx={{ opacity: 0.8 }}>
-            隨時可升級到付費版，支援 Excel、TXT 等更多格式
+            Upgrade to premium anytime for Excel, TXT and more formats
           </Typography>
         </Box>
         {/* 背景裝飾 */}
@@ -142,13 +142,13 @@ export const RegisterPage: React.FC = () => {
         }}
       >
         <Paper sx={{ p: 6, width: '100%', maxWidth: 500, borderRadius: 3 }}>
-          {/* 標題 */}
+          {/* Title */}
           <Box sx={{ textAlign: 'center', mb: 4 }}>
             <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
-              註冊
+              Register
             </Typography>
             <Typography variant="body1" color="textSecondary">
-              創建您的檔案切分工具帳戶
+              Create your File Split Tool account
             </Typography>
           </Box>
 
@@ -159,11 +159,11 @@ export const RegisterPage: React.FC = () => {
             </Alert>
           )}
 
-          {/* 註冊表單 */}
+          {/* Registration form */}
           <Box component="form" onSubmit={handleSubmit}>
             <TextField
               fullWidth
-              label="電子郵件"
+              label="Email Address"
               name="email"
               type="email"
               value={formData.email}
@@ -176,7 +176,7 @@ export const RegisterPage: React.FC = () => {
 
             <TextField
               fullWidth
-              label="密碼"
+              label="Password"
               name="password"
               type="password"
               value={formData.password}
@@ -184,12 +184,12 @@ export const RegisterPage: React.FC = () => {
               margin="normal"
               required
               autoComplete="new-password"
-              helperText="密碼長度至少需要 6 個字元"
+              helperText="Password must be at least 6 characters long"
             />
 
             <TextField
               fullWidth
-              label="確認密碼"
+              label="Confirm Password"
               name="confirmPassword"
               type="password"
               value={formData.confirmPassword}
@@ -209,16 +209,16 @@ export const RegisterPage: React.FC = () => {
               size="large"
               sx={{ mt: 3, mb: 2 }}
             >
-              註冊
+              Register
             </LoadingButton>
           </Box>
 
           <Divider sx={{ my: 3 }} />
 
-          {/* 登入連結 */}
+          {/* Login link */}
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="body2" color="textSecondary" gutterBottom>
-              已經有帳戶？
+              Already have an account?
             </Typography>
             <Button
               component={RouterLink}
@@ -228,14 +228,14 @@ export const RegisterPage: React.FC = () => {
               size="large"
               fullWidth
             >
-              登入現有帳戶
+              Sign In to Existing Account
             </Button>
           </Box>
 
-          {/* 條款說明 */}
+          {/* Terms notice */}
           <Box sx={{ mt: 4, textAlign: 'center' }}>
             <Typography variant="caption" color="text.secondary">
-              註冊即表示您同意我們的服務條款和隱私政策
+              By registering, you agree to our Terms of Service and Privacy Policy
             </Typography>
           </Box>
         </Paper>

@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline, Box, Typography, CircularProgress } from '@mui/material';
 import { SimpleAuthProvider } from './context/SimpleAuthContext';
-import { AppLayout } from './components/Layout/AppLayout';
 import { LandingPage } from './pages/LandingPage';
 import { AppPage } from './pages/AppPage';
 import { LoginPage } from './pages/LoginPage';
@@ -161,19 +160,11 @@ const AppContent: React.FC = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       
-      {/* 使用 AppLayout 包裝的應用頁面 */}
-      <Route path="/app" element={
-        <AppLayout>
-          <AppPage />
-        </AppLayout>
-      } />
+      {/* App page with unified design */}
+      <Route path="/app" element={<AppPage />} />
       
-      {/* 其他頁面使用 AppLayout */}
-      <Route path="/pricing" element={
-        <AppLayout>
-          <PricingPage />
-        </AppLayout>
-      } />
+      {/* Pricing page with unified design */}
+      <Route path="/pricing" element={<PricingPage />} />
       
       {/* 404 重定向 */}
       <Route path="*" element={<Navigate to="/" replace />} />

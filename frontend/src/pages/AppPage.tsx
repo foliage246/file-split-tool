@@ -8,7 +8,17 @@ import {
   Alert,
   Typography,
   Container,
+  AppBar,
+  Toolbar,
+  Button,
+  Chip,
+  Avatar,
+  IconButton,
+  Menu,
+  MenuItem,
+  alpha,
 } from '@mui/material';
+import { AccountCircle, ExitToApp, Home } from '@mui/icons-material';
 import { FileUploadStep } from '../components/FileUpload/FileUploadStep';
 import { ColumnSelectionStep } from '../components/FileUpload/ColumnSelectionStep';
 import { ProcessingStep } from '../components/FileUpload/ProcessingStep';
@@ -18,7 +28,7 @@ import { useAuth } from '../context/SimpleAuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export const AppPage: React.FC = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user, logout } = useAuth();
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   const [uploadData, setUploadData] = useState<FileUploadData>({
@@ -28,6 +38,7 @@ export const AppPage: React.FC = () => {
   });
   const [usageLimits, setUsageLimits] = useState<UsageLimits | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   
   const steps = [
     'Upload File',
@@ -84,6 +95,24 @@ export const AppPage: React.FC = () => {
     setError(null);
   };
 
+  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = async () => {
+    handleClose();
+    await logout();
+    navigate('/login');
+  };
+
+  const handleUpgrade = () => {
+    navigate('/pricing');
+  };
+
   const renderStepContent = () => {
     switch (activeStep) {
       case 0:
@@ -127,38 +156,170 @@ export const AppPage: React.FC = () => {
     return null;
   }
 
-  // 檢查使用限制
-  if (usageLimits && usageLimits.daily_usage.remaining <= 0) {
-    return (
-      <Container maxWidth="xl">
-        <Box sx={{ py: 4 }}>
-          <Alert severity="warning" sx={{ mb: 3 }}>
+  return (
+    <Box sx={{ flexGrow: 1, bgcolor: '#fafafa', minHeight: '100vh' }}>
+      {/* Header Section */}
+      <AppBar position="static" sx={{ 
+        bgcolor: 'white', 
+        color: '#1976d2',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+      }}>
+        <Toolbar>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, cursor: 'pointer', fontWeight: 'bold' }}
+            onClick={() => navigate('/')}
+          >
+            File Split Tool
+          </Typography>
+
+          {isAuthenticated && user ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              {/* User tier badge */}
+              <Chip
+                label={user.is_premium ? 'Premium' : 'Free'}
+                color={user.is_premium ? 'success' : 'default'}
+                size="small"
+                variant="filled"
+                sx={{
+                  bgcolor: user.is_premium ? '#4caf50' : '#e0e0e0',
+                  color: 'white',
+                }}
+              />
+
+              {/* Upgrade button */}
+              {!user.is_premium && (
+                <Button
+                  color="warning"
+                  variant="contained"
+                  size="small"
+                  onClick={handleUpgrade}
+                  sx={{ bgcolor: '#ff9800', '&:hover': { bgcolor: '#e68900' } }}
+                >
+                  Upgrade
+                </Button>
+              )}
+
+              {/* User menu */}
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                sx={{ color: '#1976d2' }}
+              >
+                <Avatar sx={{ width: 32, height: 32, bgcolor: '#1976d2' }}>
+                  {user.email.charAt(0).toUpperCase()}
+                </Avatar>
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem disabled>
+                  <Box>
+                    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                      {user.email}
+                    </Typography>
+                    <Typography variant="caption" color="textSecondary">
+                      {user.is_premium ? 'Premium Member' : 'Free Member'}
+                    </Typography>
+                  </Box>
+                </MenuItem>
+                <MenuItem onClick={() => { handleClose(); navigate('/'); }}>
+                  <Home sx={{ mr: 1 }} />
+                  Home
+                </MenuItem>
+                <MenuItem onClick={() => { handleClose(); navigate('/pricing'); }}>
+                  <AccountCircle sx={{ mr: 1 }} />
+                  Pricing
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                  <ExitToApp sx={{ mr: 1 }} />
+                  Logout
+                </MenuItem>
+              </Menu>
+            </Box>
+          ) : (
+            <Button 
+              color="inherit" 
+              onClick={() => navigate('/login')}
+              sx={{ color: '#1976d2' }}
+            >
+              Login
+            </Button>
+          )}
+        </Toolbar>
+      </AppBar>
+
+      {/* Hero Section */}
+      <Box
+        sx={{
+          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+          color: 'white',
+          py: 6,
+        }}
+      >
+        <Container maxWidth="lg">
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography
+              variant="h3"
+              component="h1"
+              gutterBottom
+              sx={{ fontWeight: 'bold', mb: 2 }}
+            >
+              File Split Tool
+            </Typography>
+            <Typography
+              variant="h6"
+              sx={{ opacity: 0.9, maxWidth: 600, mx: 'auto' }}
+            >
+              Upload, select column, and process your files in three simple steps
+            </Typography>
+
+            {/* Current user status */}
+            {user && (
+              <Chip
+                label={`Current Plan: ${user.is_premium ? 'Premium' : 'Free'}`}
+                sx={{
+                  mt: 3,
+                  bgcolor: alpha('#fff', 0.2),
+                  color: 'white',
+                  fontWeight: 'bold',
+                }}
+              />
+            )}
+          </Box>
+        </Container>
+      </Box>
+
+      <Container maxWidth="lg" sx={{ py: 6 }}>
+        {/* Check usage limits */}
+        {usageLimits && usageLimits.daily_usage.remaining <= 0 && (
+          <Alert severity="warning" sx={{ mb: 4 }}>
             Your daily processing quota has been exhausted.
             {!usageLimits.user_tier || usageLimits.user_tier === 'free' ? 
               ' Upgrade to premium for more processing quota.' : 
               ' Quota will reset tomorrow.'
             }
           </Alert>
-        </Box>
-      </Container>
-    );
-  }
+        )}
 
-  return (
-    <Container maxWidth="xl">
-      <Box sx={{ py: 4 }}>
-        {/* 頁面標題 */}
-        <Typography
-          variant="h4"
-          component="h1"
-          gutterBottom
-          sx={{ fontWeight: 'bold', mb: 4, textAlign: 'center' }}
-        >
-          File Split Tool
-        </Typography>
-
-        {/* 步驟指示器 */}
-        <Paper sx={{ p: 4, mb: 4, borderRadius: 2 }}>
+        {/* Progress stepper */}
+        <Paper sx={{ p: 4, mb: 4, borderRadius: 3 }}>
           <Stepper activeStep={activeStep} alternativeLabel>
             {steps.map((label, index) => (
               <Step key={label} completed={activeStep > index}>
@@ -168,18 +329,18 @@ export const AppPage: React.FC = () => {
           </Stepper>
         </Paper>
 
-        {/* 錯誤訊息 */}
+        {/* Error message */}
         {error && (
-          <Alert severity="error" sx={{ mb: 3 }}>
+          <Alert severity="error" sx={{ mb: 4 }}>
             {error}
           </Alert>
         )}
 
-        {/* 使用限制提示 */}
+        {/* Usage limits reminder */}
         {usageLimits && activeStep === 0 && (
           <Alert 
             severity={usageLimits.daily_usage.remaining <= 2 ? "warning" : "info"} 
-            sx={{ mb: 3 }}
+            sx={{ mb: 4 }}
           >
             Daily usage remaining: {usageLimits.daily_usage.remaining} / {usageLimits.daily_usage.limit}
             {usageLimits.user_tier === 'free' && usageLimits.daily_usage.remaining <= 2 && (
@@ -191,11 +352,20 @@ export const AppPage: React.FC = () => {
           </Alert>
         )}
 
-        {/* 步驟內容 */}
-        <Paper sx={{ p: 4, borderRadius: 2, minHeight: 400 }}>
+        {/* Step content */}
+        <Paper sx={{ 
+          p: 4, 
+          borderRadius: 3, 
+          minHeight: 500,
+          border: '1px solid #e0e0e0',
+          transition: 'all 0.3s ease',
+          '&:hover': {
+            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          }
+        }}>
           {renderStepContent()}
         </Paper>
-      </Box>
-    </Container>
+      </Container>
+    </Box>
   );
 };
