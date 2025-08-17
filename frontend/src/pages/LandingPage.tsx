@@ -77,7 +77,7 @@ export const LandingPage: React.FC = () => {
             <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
               File Split Tool
             </Typography>
-            {!isAuthenticated ? (
+{!isAuthenticated && (
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <Button 
                   color="inherit" 
@@ -108,21 +108,6 @@ export const LandingPage: React.FC = () => {
                   Register
                 </Button>
               </Box>
-            ) : (
-              <Button 
-                variant="contained" 
-                onClick={() => navigate('/app')}
-                sx={{ 
-                  textTransform: 'none',
-                  bgcolor: 'white',
-                  color: '#1976d2',
-                  '&:hover': {
-                    bgcolor: '#f5f5f5'
-                  }
-                }}
-              >
-                Go to App
-              </Button>
             )}
           </Box>
           <Grid container spacing={6} alignItems="center" sx={{ mt: 4 }}>
