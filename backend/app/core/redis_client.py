@@ -32,6 +32,10 @@ class RedisClient:
         """設置鍵值"""
         return await self.redis.set(key, value, ex=ex)
     
+    async def setex(self, key: str, time: int, value: str):
+        """設置鍵值並設置過期時間"""
+        return await self.redis.setex(key, time, value)
+    
     async def get(self, key: str) -> Optional[str]:
         """獲取值"""
         return await self.redis.get(key)
