@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y \
     curl \
     nginx \
     supervisor \
+    libmagic1 \
+    libmagic-dev \
+    file \
     && rm -rf /var/lib/apt/lists/*
 
 # 設定後端
@@ -36,8 +39,12 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # 創建必要的目錄
 RUN mkdir -p /app/storage/uploads /app/storage/outputs
 
+# 複製啟動腳本
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
 # 暴露端口
 EXPOSE $PORT
 
-# 啟動 Supervisor（管理 Nginx 和 FastAPI）
-CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+# 啟動腳本
+CMD ["/start.sh"]
