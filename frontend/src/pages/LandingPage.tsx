@@ -59,58 +59,73 @@ export const LandingPage: React.FC = () => {
   ];
 
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: '#fafafa' }}>
-      {/* Header */}
-      <AppBar position="static" sx={{ 
-        bgcolor: 'white', 
-        color: '#1976d2',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, fontWeight: 'bold' }}>
-            File Split Tool
-          </Typography>
-          {!isAuthenticated ? (
-            <Box sx={{ display: 'flex', gap: 2 }}>
-              <Button 
-                color="inherit" 
-                onClick={() => navigate('/login')}
-                sx={{ textTransform: 'none' }}
-              >
-                Login
-              </Button>
-              <Button 
-                variant="contained"
-                onClick={() => navigate('/register')}
-                sx={{ textTransform: 'none', bgcolor: '#1976d2' }}
-              >
-                Register
-              </Button>
-            </Box>
-          ) : (
-            <Button 
-              variant="contained" 
-              onClick={() => navigate('/app')}
-              sx={{ textTransform: 'none' }}
-            >
-              Go to App
-            </Button>
-          )}
-        </Toolbar>
-      </AppBar>
-
+    <Box sx={{ flexGrow: 1 }}>
       {/* Hero Section */}
       <Box
         sx={{
           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
           color: 'white',
-          py: 12,
+          py: 8,
           position: 'relative',
           overflow: 'hidden',
+          minHeight: '100vh',
         }}
       >
+        {/* Header inside hero section */}
         <Container maxWidth="lg">
-          <Grid container spacing={6} alignItems="center">
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 6 }}>
+            <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>
+              File Split Tool
+            </Typography>
+            {!isAuthenticated ? (
+              <Box sx={{ display: 'flex', gap: 2 }}>
+                <Button 
+                  color="inherit" 
+                  onClick={() => navigate('/login')}
+                  sx={{ 
+                    textTransform: 'none',
+                    color: 'white',
+                    border: '1px solid rgba(255,255,255,0.3)',
+                    '&:hover': {
+                      bgcolor: 'rgba(255,255,255,0.1)'
+                    }
+                  }}
+                >
+                  Login
+                </Button>
+                <Button 
+                  variant="contained"
+                  onClick={() => navigate('/register')}
+                  sx={{ 
+                    textTransform: 'none', 
+                    bgcolor: 'white',
+                    color: '#1976d2',
+                    '&:hover': {
+                      bgcolor: '#f5f5f5'
+                    }
+                  }}
+                >
+                  Register
+                </Button>
+              </Box>
+            ) : (
+              <Button 
+                variant="contained" 
+                onClick={() => navigate('/app')}
+                sx={{ 
+                  textTransform: 'none',
+                  bgcolor: 'white',
+                  color: '#1976d2',
+                  '&:hover': {
+                    bgcolor: '#f5f5f5'
+                  }
+                }}
+              >
+                Go to App
+              </Button>
+            )}
+          </Box>
+          <Grid container spacing={6} alignItems="center" sx={{ mt: 4 }}>
             <Grid item xs={12} md={6}>
               <Chip 
                 label="⭐ Most Popular File Tool" 
@@ -244,7 +259,8 @@ export const LandingPage: React.FC = () => {
       </Box>
 
       {/* Features Section */}
-      <Container maxWidth="lg" sx={{ py: 8 }}>
+      <Box sx={{ bgcolor: 'white', py: 8 }}>
+        <Container maxWidth="lg">
         <Box sx={{ textAlign: 'center', mb: 6 }}>
           <Typography variant="h3" component="h2" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
             Why Choose Our Tool?
@@ -287,7 +303,8 @@ export const LandingPage: React.FC = () => {
             </Grid>
           ))}
         </Grid>
-      </Container>
+        </Container>
+      </Box>
 
       {/* Stats Section */}
       <Box sx={{ bgcolor: '#f8f9fa', py: 6 }}>
