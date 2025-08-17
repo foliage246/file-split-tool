@@ -13,10 +13,8 @@ import {
   Chip,
 } from '@mui/material';
 import { AccountCircle, ExitToApp } from '@mui/icons-material';
-import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/SimpleAuthContext';
 import { useNavigate } from 'react-router-dom';
-import { LanguageSwitcher } from '../LanguageSwitcher';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -25,7 +23,6 @@ interface AppLayoutProps {
 export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const { user, logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const { t } = useTranslation(['common']);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -60,19 +57,15 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             sx={{ flexGrow: 1, cursor: 'pointer' }}
             onClick={() => navigate('/')}
           >
-            {t('nav.app')}
+            File Split Tool
           </Typography>
 
-          {/* 語言切換器 */}
-          <Box sx={{ mr: 2 }}>
-            <LanguageSwitcher variant="icon" size="small" showText={false} />
-          </Box>
 
           {isAuthenticated && user ? (
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
               {/* 用戶等級標示 */}
               <Chip
-                label={user.is_premium ? t('user.premium') : t('user.free')}
+                label={user.is_premium ? 'Premium' : 'Free'}
                 color={user.is_premium ? 'success' : 'default'}
                 size="small"
                 variant="outlined"
@@ -92,7 +85,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                   onClick={handleUpgrade}
                   sx={{ bgcolor: '#ff9800', '&:hover': { bgcolor: '#e68900' } }}
                 >
-                  {t('user.upgrade')}
+                  Upgrade
                 </Button>
               )}
 
@@ -130,33 +123,33 @@ export const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
                       {user.email}
                     </Typography>
                     <Typography variant="caption" color="textSecondary">
-                      {user.is_premium ? t('user.premiumMember') : t('user.freeMember')}
+                      {user.is_premium ? 'Premium Member' : 'Free Member'}
                     </Typography>
                   </Box>
                 </MenuItem>
                 <MenuItem onClick={() => { handleClose(); navigate('/dashboard'); }}>
                   <AccountCircle sx={{ mr: 1 }} />
-                  {t('user.myFiles')}
+                  My Files
                 </MenuItem>
                 {user.is_premium && (
                   <MenuItem onClick={() => { handleClose(); navigate('/subscription'); }}>
-                    {t('user.subscriptionManage')}
+                    Subscription Management
                   </MenuItem>
                 )}
                 {!user.is_premium && (
                   <MenuItem onClick={() => { handleClose(); navigate('/pricing'); }}>
-                    {t('user.upgradePlan')}
+                    Upgrade Plan
                   </MenuItem>
                 )}
                 <MenuItem onClick={handleLogout}>
                   <ExitToApp sx={{ mr: 1 }} />
-                  {t('nav.logout')}
+                  Logout
                 </MenuItem>
               </Menu>
             </Box>
           ) : (
             <Button color="inherit" onClick={handleLogin}>
-              {t('nav.login')}
+              Login
             </Button>
           )}
         </Toolbar>

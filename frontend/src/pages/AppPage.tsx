@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 export const AppPage: React.FC = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const { t } = useTranslation('app');
+  const { t } = useTranslation();
   const [activeStep, setActiveStep] = useState(0);
   const [uploadData, setUploadData] = useState<FileUploadData>({
     file: null,

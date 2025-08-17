@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline, Box, Typography, CircularProgress } from '@mui/material';
 import { SimpleAuthProvider } from './context/SimpleAuthContext';
-import { LanguageProvider } from './context/LanguageContext';
 import { AppLayout } from './components/Layout/AppLayout';
 import { LandingPage } from './pages/LandingPage';
 import { AppPage } from './pages/AppPage';
@@ -144,13 +143,11 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Suspense fallback={<LoadingFallback />}>
-        <LanguageProvider>
-          <SimpleAuthProvider>
-            <Router>
-              <AppContent />
-            </Router>
-          </SimpleAuthProvider>
-        </LanguageProvider>
+        <SimpleAuthProvider>
+          <Router>
+            <AppContent />
+          </Router>
+        </SimpleAuthProvider>
       </Suspense>
     </ThemeProvider>
   );

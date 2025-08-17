@@ -2,35 +2,44 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-// 中文翻譯資源
-import zhCommon from '../locales/zh/common.json';
-import zhLanding from '../locales/zh/landing.json';
-import zhAuth from '../locales/zh/auth.json';
-import zhApp from '../locales/zh/app.json';
-import zhPricing from '../locales/zh/pricing.json';
-
-// 英文翻譯資源
-import enCommon from '../locales/en/common.json';
-import enLanding from '../locales/en/landing.json';
-import enAuth from '../locales/en/auth.json';
-import enApp from '../locales/en/app.json';
-import enPricing from '../locales/en/pricing.json';
-
+// 只使用英文翻譯
 const resources = {
-  zh: {
-    common: zhCommon,
-    landing: zhLanding,
-    auth: zhAuth,
-    app: zhApp,
-    pricing: zhPricing,
-  },
   en: {
-    common: enCommon,
-    landing: enLanding,
-    auth: enAuth,
-    app: enApp,
-    pricing: enPricing,
-  },
+    app: {
+      fileUpload: {
+        title: "Step 1: Upload File",
+        dropZoneText: "Drag and drop files here, or click to select files",
+        supportedFormats: "Supported Formats",
+        maxFileSize: "Maximum file size",
+        uploadButton: "Select File",
+        unsupportedFileType: "Unsupported file format. Supported formats",
+        fileTooLargeError: "File too large. Maximum supported",
+        nextStep: "Next Step",
+        csvFormat: "CSV Files (.csv)",
+        csvDescription: "Support UTF-8, Big5, GB2312 and other encodings",
+        excelFormat: "Excel Files (.xlsx, .xls)",
+        excelDescription: "Microsoft Excel format",
+        txtFormat: "Text Files (.txt)",
+        txtDescription: "Plain text files, support multiple split formats"
+      },
+      steps: {
+        upload: "Upload File",
+        selectColumn: "Select Column",
+        processResults: "Process Results"
+      },
+      page: {
+        title: "File Split Tool",
+        dailyUsageRemaining: "Daily usage remaining",
+        upgradePromotion: "Consider upgrading to premium for more processing quota and larger file support.",
+        dailyLimitExhausted: "Your daily processing quota has been exhausted.",
+        upgradeToPremium: "Upgrade to premium for more processing quota.",
+        quotaResetTomorrow: "Quota will reset tomorrow."
+      },
+      errors: {
+        emptyFile: "Please select a file to upload"
+      }
+    }
+  }
 };
 
 // 同步初始化 i18n
@@ -39,9 +48,9 @@ i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: 'zh', // 明確設定預設語言
-    fallbackLng: 'zh',
-    debug: true, // 啟用調試模式
+    lng: 'en', // 設定為英文
+    fallbackLng: 'en',
+    debug: false,
     
     // 簡化的語言檢測選項
     detection: {
@@ -50,8 +59,8 @@ i18n
       lookupLocalStorage: 'i18nextLng',
     },
 
-    defaultNS: 'common',
-    ns: ['common', 'landing', 'auth', 'app', 'pricing'],
+    defaultNS: 'app',
+    ns: ['app'],
 
     interpolation: {
       escapeValue: false,
@@ -66,7 +75,7 @@ i18n
       transKeepBasicHtmlNodesFor: ['br', 'strong', 'i'],
     },
 
-    supportedLngs: ['zh', 'en'],
+    supportedLngs: ['en'],
     load: 'languageOnly',
     cleanCode: true,
   })
@@ -80,9 +89,3 @@ i18n
   });
 
 export default i18n;
-
-// 導出語言列表供組件使用
-export const supportedLanguages = [
-  { code: 'zh', name: '繁體中文', flag: '🇹🇼' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-];

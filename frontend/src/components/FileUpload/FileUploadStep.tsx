@@ -50,7 +50,7 @@ export const FileUploadStep: React.FC<FileUploadStepProps> = ({
   onDataChange,
   usageLimits,
 }) => {
-  const { t } = useTranslation('app');
+  const { t } = useTranslation();
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
