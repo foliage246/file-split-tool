@@ -18,7 +18,7 @@ RUN npm ci --no-cache
 RUN npm run build
 
 # 暴露端口
-EXPOSE 4173
+EXPOSE $PORT
 
 # 使用 Vite 預覽服務器
-CMD ["npm", "run", "preview", "--", "--host", "0.0.0.0", "--port", "4173"]
+CMD ["npm", "run", "start"]
