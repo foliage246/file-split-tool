@@ -1,11 +1,12 @@
 [phases.setup]
 nixPkgs = ['nodejs', 'npm']
+workingDirectory = 'frontend'
 
 [phases.install]
-cmds = ['cd frontend && npm ci']
+cmds = ['npm ci']
 
 [phases.build]
-cmds = ['cd frontend && npm run build']
+cmds = ['npm run build']
 
 [start]
-cmd = 'npx serve frontend/dist -p $PORT'
+cmd = 'npx serve dist -p $PORT'
