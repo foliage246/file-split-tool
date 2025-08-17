@@ -1,8 +1,5 @@
 [build]
-builder = "nixpacks"
-
-[build.env]
-VITE_API_BASE_URL = "https://gleaming-liberation-production-852d.up.railway.app/api/v1"
+builder = "dockerfile"
 
 [deploy]
 restartPolicyType = "ON_FAILURE"

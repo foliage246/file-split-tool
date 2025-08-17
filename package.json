@@ -1,8 +1,0 @@
-{
-  "name": "file-split-tool-frontend",
-  "private": true,
-  "version": "0.0.0",
-  "scripts": {
-    "start": "npx serve frontend/dist -p $PORT"
-  }
-}
