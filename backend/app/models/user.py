@@ -33,3 +33,20 @@ class UserResponse(BaseModel):
     is_premium: bool
     access_token: str
     token_type: str = "bearer"
+
+class ForgotPasswordRequest(BaseModel):
+    """忘記密碼請求模型"""
+    email: EmailStr
+
+class ResetPasswordRequest(BaseModel):
+    """重設密碼請求模型"""
+    token: str
+    new_password: str
+
+class ForgotPasswordResponse(BaseModel):
+    """忘記密碼響應模型"""
+    message: str
+
+class ResetPasswordResponse(BaseModel):
+    """重設密碼響應模型"""
+    message: str

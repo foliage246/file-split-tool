@@ -8,7 +8,8 @@ from ...core.config import settings
 from ...core.security import create_access_token, verify_token, get_password_hash, verify_password
 from ...core.redis_client import get_redis_client
 from ...core.dependencies import get_current_user
-from ...models.user import User, UserCreate, UserLogin, UserResponse
+from ...models.user import User, UserCreate, UserLogin, UserResponse, ForgotPasswordRequest, ResetPasswordRequest, ForgotPasswordResponse, ResetPasswordResponse
+from ...services.email_service import email_service, generate_reset_token
 
 router = APIRouter()
 security = HTTPBearer()
@@ -202,3 +203,133 @@ async def logout(
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"登出失敗: {str(e)}")
+
+
+@router.post("/forgot-password", response_model=ForgotPasswordResponse)
+async def forgot_password(
+    request: ForgotPasswordRequest,
+    redis_client = Depends(get_redis_client)
+):
+    """
+    忘記密碼 - 發送重設連結到用戶郵箱
+    
+    Args:
+        request: 包含用戶郵箱的請求
+    
+    Returns:
+        成功訊息
+    """
+    try:
+        # 檢查用戶是否存在
+        user_id = await redis_client.get(f"user:email:{request.email}")
+        if not user_id:
+            # 為了安全起見，即使用戶不存在也返回成功訊息
+            return ForgotPasswordResponse(
+                message="If an account with that email exists, we've sent a password reset link."
+            )
+        
+        # 生成重設token
+        reset_token = generate_reset_token()
+        
+        # 將token存儲到Redis，設置1小時過期時間
+        await redis_client.setex(
+            f"password_reset:{reset_token}",
+            3600,  # 1小時
+            request.email
+        )
+        
+        # 發送重設郵件
+        email_sent = await email_service.send_password_reset_email(
+            to_email=request.email,
+            reset_token=reset_token
+        )
+        
+        if not email_sent:
+            # 即使郵件發送失敗，也不向用戶透露具體錯誤
+            pass
+        
+        return ForgotPasswordResponse(
+            message="If an account with that email exists, we've sent a password reset link."
+        )
+        
+    except Exception as e:
+        # 記錄錯誤但不向用戶透露具體訊息
+        print(f"Forgot password error: {str(e)}")
+        return ForgotPasswordResponse(
+            message="If an account with that email exists, we've sent a password reset link."
+        )
+
+
+@router.post("/reset-password", response_model=ResetPasswordResponse)
+async def reset_password(
+    request: ResetPasswordRequest,
+    redis_client = Depends(get_redis_client)
+):
+    """
+    重設密碼
+    
+    Args:
+        request: 包含token和新密碼的請求
+    
+    Returns:
+        重設結果訊息
+    """
+    try:
+        # 驗證token
+        email = await redis_client.get(f"password_reset:{request.token}")
+        if not email:
+            raise HTTPException(
+                status_code=400,
+                detail="Invalid or expired reset token"
+            )
+        
+        # 檢查密碼長度
+        if len(request.new_password) < 6:
+            raise HTTPException(
+                status_code=400,
+                detail="Password must be at least 6 characters long"
+            )
+        
+        # 查找用戶
+        user_id = await redis_client.get(f"user:email:{email}")
+        if not user_id:
+            raise HTTPException(
+                status_code=400,
+                detail="User not found"
+            )
+        
+        # 獲取用戶資料
+        user_data_str = await redis_client.get(f"user:id:{user_id}")
+        if not user_data_str:
+            raise HTTPException(
+                status_code=400,
+                detail="User data not found"
+            )
+        
+        user_dict = json.loads(user_data_str)
+        
+        # 更新密碼
+        new_hashed_password = get_password_hash(request.new_password)
+        user_dict["hashed_password"] = new_hashed_password
+        user_dict["updated_at"] = datetime.now().isoformat()
+        
+        # 儲存更新的用戶資料
+        await redis_client.set(
+            f"user:id:{user_id}",
+            json.dumps(user_dict, default=str)
+        )
+        
+        # 刪除已使用的重設token
+        await redis_client.delete(f"password_reset:{request.token}")
+        
+        # 為安全起見，使所有該用戶的會話失效（可選）
+        # 這裡可以添加邏輯來撤銷所有現有的token
+        
+        return ResetPasswordResponse(
+            message="Password has been reset successfully"
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Password reset failed: {str(e)}")
