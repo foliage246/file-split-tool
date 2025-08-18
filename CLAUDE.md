@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a desktop-optimized file splitting tool that processes files by splitting them based on single column values. Features a freemium model (free CSV-only, premium multi-format) with Stripe payment integration. Built with FastAPI backend, React frontend, and Redis caching.
+This is a desktop-optimized file splitting tool that processes files by splitting them based on single column values. Features a freemium model with Stripe payment integration. Built with FastAPI backend, React frontend, and Redis caching.
 
 **Key Features:**
-- Free tier: CSV files only, 5 files/day, 10MB limit
-- Premium tier: CSV + Excel + TXT, 50 files/day, 100MB limit  
+- Free tier: All file formats (CSV, Excel, TXT), 5 files/day, 10MB limit
+- Premium tier: All file formats (CSV, Excel, TXT), 50 files/day, 100MB limit  
 - Desktop-first UI with professional Landing Page design
 - Smart authentication flow with modal dialogs
 
@@ -113,8 +113,8 @@ PREMIUM_FILE_SIZE_LIMIT=100 # MB
 ## Business Logic
 
 ### User Tiers
-- **Free**: 5 files/day, 10MB limit, CSV only
-- **Premium**: 50 files/day, 100MB limit, CSV + Excel + TXT
+- **Free**: 5 files/day, 10MB limit, all file formats (CSV, Excel, TXT)
+- **Premium**: 50 files/day, 100MB limit, all file formats (CSV, Excel, TXT)
 - Pricing: $9.99 USD/month
 
 ### File Processing Flow

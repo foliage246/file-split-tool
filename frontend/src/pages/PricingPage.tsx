@@ -52,16 +52,13 @@ export const PricingPage: React.FC = () => {
       interval: 'month',
       description: 'Perfect for getting started',
       features: [
-        'CSV files only',
+        'All file formats (CSV, Excel, TXT)',
         '5 files per day',
         '10MB file size limit',
-        'Basic support',
         'Auto-delete after 1 hour'
       ],
       limitations: [
-        'No Excel/TXT support',
-        'Limited daily usage',
-        'Basic features only'
+        'Limited daily usage'
       ],
       popular: false,
     },
@@ -76,7 +73,6 @@ export const PricingPage: React.FC = () => {
         'All file formats (CSV, Excel, TXT)',
         '50 files per day',
         '100MB file size limit',
-        'Priority support',
         'Advanced encoding detection',
         'Bulk processing'
       ],
@@ -407,8 +403,8 @@ export const PricingPage: React.FC = () => {
                 </Typography>
               </Box>
               <List dense>
-                <ListItem>• Free: CSV format only</ListItem>
-                <ListItem>• Premium: CSV, Excel, TXT</ListItem>
+                <ListItem>• Both tiers: CSV, Excel, TXT formats</ListItem>
+                <ListItem>• Advanced encoding support</ListItem>
                 <ListItem>• Auto-detect Big5, UTF-8 encoding</ListItem>
                 <ListItem>• Single column value splitting</ListItem>
               </List>
@@ -422,8 +418,8 @@ export const PricingPage: React.FC = () => {
                 </Typography>
               </Box>
               <List dense>
-                <ListItem>• Free: 5 files/day, 10MB, CSV only</ListItem>
-                <ListItem>• Premium: 50 files/day, 100MB, all formats</ListItem>
+                <ListItem>• Free: 5 files/day, 10MB limit</ListItem>
+                <ListItem>• Premium: 50 files/day, 100MB limit</ListItem>
                 <ListItem>• Results auto-delete after 1 hour</ListItem>
                 <ListItem>• Optimized processing workflow</ListItem>
               </List>

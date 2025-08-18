@@ -32,7 +32,7 @@ async def upload_file(
     上傳檔案並開始處理任務
     
     支援格式：CSV, Excel (.xlsx, .xls), TXT
-    免費用戶：5 檔案/日，10MB 限制，僅 CSV
+    免費用戶：5 檔案/日，10MB 限制，支援所有格式
     付費用戶：50 檔案/日，100MB 限制，支援所有格式
     
     Args:
