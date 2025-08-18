@@ -73,8 +73,7 @@ export const PricingPage: React.FC = () => {
         'All file formats (CSV, Excel, TXT)',
         '50 files per day',
         '100MB file size limit',
-        'Advanced encoding detection',
-        'Bulk processing'
+        'Auto-delete after 1 hour'
       ],
       limitations: [],
       popular: true,
