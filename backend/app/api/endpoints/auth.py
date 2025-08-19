@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from datetime import datetime, timedelta
 import json
+import logging
 from typing import Optional
 
 from ...core.config import settings
@@ -13,6 +14,7 @@ from ...services.email_service import email_service, generate_reset_token
 
 router = APIRouter()
 security = HTTPBearer()
+logger = logging.getLogger(__name__)
 
 
 @router.post("/register", response_model=UserResponse)
@@ -245,8 +247,8 @@ async def forgot_password(
         )
         
         if not email_sent:
-            # 即使郵件發送失敗，也不向用戶透露具體錯誤
-            pass
+            # 記錄郵件發送失敗，但不向用戶透露具體錯誤
+            logger.error(f"Failed to send password reset email to {request.email}")
         
         return ForgotPasswordResponse(
             message="If an account with that email exists, we've sent a password reset link."
@@ -254,7 +256,7 @@ async def forgot_password(
         
     except Exception as e:
         # 記錄錯誤但不向用戶透露具體訊息
-        print(f"Forgot password error: {str(e)}")
+        logger.error(f"Forgot password error for {request.email}: {str(e)}")
         return ForgotPasswordResponse(
             message="If an account with that email exists, we've sent a password reset link."
         )
@@ -333,3 +335,51 @@ async def reset_password(
         raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Password reset failed: {str(e)}")
+
+
+@router.post("/test-email")
+async def test_email(
+    request: ForgotPasswordRequest,
+    current_user: User = Depends(get_current_user)
+):
+    """
+    測試郵件發送功能（僅供管理員或開發時使用）
+    
+    Args:
+        request: 包含測試郵箱地址的請求
+        current_user: 當前認證用戶
+    
+    Returns:
+        郵件發送測試結果
+    """
+    try:
+        # 生成測試token
+        test_token = generate_reset_token()
+        
+        logger.info(f"Testing email service for {request.email}")
+        
+        # 嘗試發送測試郵件
+        email_sent = await email_service.send_password_reset_email(
+            to_email=request.email,
+            reset_token=test_token
+        )
+        
+        if email_sent:
+            return {
+                "success": True,
+                "message": f"Test email successfully sent to {request.email}",
+                "test_token": test_token
+            }
+        else:
+            return {
+                "success": False,
+                "message": f"Failed to send test email to {request.email}",
+                "note": "Check server logs for detailed error information"
+            }
+            
+    except Exception as e:
+        logger.error(f"Test email error: {str(e)}")
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Email test failed: {str(e)}"
+        )

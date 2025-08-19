@@ -6,6 +6,7 @@ from email.mime.multipart import MIMEMultipart
 from jinja2 import Template
 from typing import Optional
 import logging
+from smtplib import SMTPException, SMTPAuthenticationError, SMTPConnectError, SMTPServerDisconnected
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +20,18 @@ class EmailService:
         self.smtp_password = os.getenv("SMTP_PASSWORD", "")
         self.from_email = os.getenv("FROM_EMAIL", self.smtp_username)
         self.from_name = os.getenv("FROM_NAME", "File Split Tool")
+        
+        # Log configuration (without sensitive data)
+        logger.info(f"Email service initialized:")
+        logger.info(f"  SMTP Server: {self.smtp_server}:{self.smtp_port}")
+        logger.info(f"  From Email: {self.from_email}")
+        logger.info(f"  From Name: {self.from_name}")
+        logger.info(f"  Username configured: {'Yes' if self.smtp_username else 'No'}")
+        logger.info(f"  Password configured: {'Yes' if self.smtp_password else 'No'}")
+        
+        # Validate configuration
+        if not self.smtp_username or not self.smtp_password:
+            logger.warning("SMTP credentials not configured - emails will only be logged in development mode")
         
     async def send_password_reset_email(self, to_email: str, reset_token: str, frontend_url: str = "https://file-split-tool-production.up.railway.app") -> bool:
         """
@@ -135,24 +148,44 @@ class EmailService:
             
             # 發送郵件
             if self.smtp_username and self.smtp_password:
-                await aiosmtplib.send(
-                    msg,
-                    hostname=self.smtp_server,
-                    port=self.smtp_port,
-                    start_tls=True,
-                    username=self.smtp_username,
-                    password=self.smtp_password,
-                )
-                logger.info(f"Password reset email sent to {to_email}")
-                return True
+                try:
+                    logger.info(f"Attempting to send email to {to_email} via {self.smtp_server}:{self.smtp_port}")
+                    await aiosmtplib.send(
+                        msg,
+                        hostname=self.smtp_server,
+                        port=self.smtp_port,
+                        start_tls=True,
+                        username=self.smtp_username,
+                        password=self.smtp_password,
+                    )
+                    logger.info(f"✅ Password reset email successfully sent to {to_email}")
+                    return True
+                except SMTPAuthenticationError as e:
+                    logger.error(f"❌ SMTP Authentication failed: {str(e)}")
+                    logger.error("Check SMTP_USERNAME and SMTP_PASSWORD environment variables")
+                    return False
+                except SMTPConnectError as e:
+                    logger.error(f"❌ SMTP Connection failed: {str(e)}")
+                    logger.error(f"Cannot connect to {self.smtp_server}:{self.smtp_port}")
+                    return False
+                except SMTPServerDisconnected as e:
+                    logger.error(f"❌ SMTP Server disconnected: {str(e)}")
+                    return False
+                except SMTPException as e:
+                    logger.error(f"❌ SMTP Error: {str(e)}")
+                    return False
+                except Exception as e:
+                    logger.error(f"❌ Unexpected error sending email: {str(e)}")
+                    return False
             else:
                 # 開發環境下，只記錄日誌而不實際發送
+                logger.warning(f"[DEV MODE] SMTP credentials not configured")
                 logger.info(f"[DEV MODE] Password reset email would be sent to {to_email}")
                 logger.info(f"[DEV MODE] Reset URL: {reset_url}")
                 return True
                 
         except Exception as e:
-            logger.error(f"Failed to send password reset email to {to_email}: {str(e)}")
+            logger.error(f"❌ Failed to prepare password reset email for {to_email}: {str(e)}")
             return False
 
 def generate_reset_token() -> str:
