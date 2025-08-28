@@ -353,6 +353,56 @@ export const LandingPage: React.FC = () => {
           </Button>
         </Container>
       </Box>
+
+      {/* Footer */}
+      <Box sx={{ bgcolor: '#f8f9fa', py: 4, borderTop: '1px solid #e0e0e0' }}>
+        <Container maxWidth="lg">
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
+                File Splitting Tool
+              </Typography>
+              <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+                Professional file splitting made simple and secure.
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
+                Links
+              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Button
+                  variant="text"
+                  onClick={() => navigate('/pricing')}
+                  sx={{ justifyContent: 'flex-start', p: 0, textTransform: 'none', color: 'textSecondary' }}
+                >
+                  Pricing
+                </Button>
+                <Button
+                  variant="text"
+                  onClick={() => navigate('/terms')}
+                  sx={{ justifyContent: 'flex-start', p: 0, textTransform: 'none', color: 'textSecondary' }}
+                >
+                  Terms & Conditions
+                </Button>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3}>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
+                Contact
+              </Typography>
+              <Typography variant="body2" color="textSecondary">
+                contact.floweasy@gmail.com
+              </Typography>
+            </Grid>
+          </Grid>
+          <Box sx={{ textAlign: 'center', mt: 4, pt: 3, borderTop: '1px solid #e0e0e0' }}>
+            <Typography variant="body2" color="textSecondary">
+              © 2025 File Splitting Tool. All rights reserved.
+            </Typography>
+          </Box>
+        </Container>
+      </Box>
     </Box>
   );
 };

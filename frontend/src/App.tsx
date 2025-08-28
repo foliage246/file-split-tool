@@ -10,6 +10,7 @@ import { RegisterPage } from './pages/RegisterPage';
 import { PricingPage } from './pages/PricingPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
+import { TermsAndConditionsPage } from './pages/TermsAndConditionsPage';
 
 
 // 創建 Material-UI 主題 - 優化桌面版
@@ -169,6 +170,9 @@ const AppContent: React.FC = () => {
       
       {/* Pricing page with unified design */}
       <Route path="/pricing" element={<PricingPage />} />
+      
+      {/* Terms and Conditions page */}
+      <Route path="/terms" element={<TermsAndConditionsPage />} />
       
       {/* 404 重定向 */}
       <Route path="*" element={<Navigate to="/" replace />} />
