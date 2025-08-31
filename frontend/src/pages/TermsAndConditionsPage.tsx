@@ -41,7 +41,7 @@ export const TermsAndConditionsPage: React.FC = () => {
                 1. Service Description
               </Typography>
               <Typography variant="body1" paragraph>
-                This file splitting tool (the "Service") is a web-based application that allows users to upload and process CSV, Excel, and text files, splitting them into multiple smaller files based on values in a single column.
+                Floweasy operates this file splitting tool (the "Service"), a web-based application that allows users to upload and process CSV, Excel, and text files, splitting them into multiple smaller files based on values in a single column.
               </Typography>
             </Box>
 
@@ -109,6 +109,7 @@ export const TermsAndConditionsPage: React.FC = () => {
                 • Premium subscription fees are processed securely through Paddle
                 • Subscriptions are billed monthly and can be cancelled at any time
                 • Refund policy: Full refund available within first 7 days of subscription
+                • For privacy concerns, please refer to our <Button variant="text" onClick={() => navigate('/privacy')} sx={{ p: 0, textDecoration: 'underline' }}>Privacy Policy</Button>
               </Typography>
             </Box>
 
@@ -181,9 +182,12 @@ export const TermsAndConditionsPage: React.FC = () => {
               </Typography>
               <Typography variant="body1" paragraph>
                 For any questions or concerns, please contact us:
-                <br />
+              </Typography>
+              <Typography variant="body1" paragraph>
+                <strong>Floweasy</strong><br />
                 Email: contact.floweasy@gmail.com
-                <br />
+              </Typography>
+              <Typography variant="body1" paragraph>
                 We will respond to your inquiries as soon as possible.
               </Typography>
             </Box>

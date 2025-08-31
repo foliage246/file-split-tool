@@ -11,6 +11,7 @@ import { PricingPage } from './pages/PricingPage';
 import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/ResetPasswordPage';
 import { TermsAndConditionsPage } from './pages/TermsAndConditionsPage';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 
 
 // 創建 Material-UI 主題 - 優化桌面版
@@ -173,6 +174,9 @@ const AppContent: React.FC = () => {
       
       {/* Terms and Conditions page */}
       <Route path="/terms" element={<TermsAndConditionsPage />} />
+      
+      {/* Privacy Policy page */}
+      <Route path="/privacy" element={<PrivacyPolicyPage />} />
       
       {/* 404 重定向 */}
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -385,6 +385,13 @@ export const LandingPage: React.FC = () => {
                 >
                   Terms & Conditions
                 </Button>
+                <Button
+                  variant="text"
+                  onClick={() => navigate('/privacy')}
+                  sx={{ justifyContent: 'flex-start', p: 0, textTransform: 'none', color: 'textSecondary' }}
+                >
+                  Privacy Policy
+                </Button>
               </Box>
             </Grid>
             <Grid item xs={12} md={3}>
