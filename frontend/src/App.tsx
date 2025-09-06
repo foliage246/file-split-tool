@@ -14,7 +14,7 @@ import { TermsAndConditionsPage } from './pages/TermsAndConditionsPage';
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
 
 
-// 創建 Material-UI 主題 - 優化桌面版
+// Create Material-UI theme - Desktop optimized
 const theme = createTheme({
   palette: {
     primary: {
@@ -29,7 +29,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: '"Roboto", "Helvetica", "Arial", "Noto Sans TC", sans-serif',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
       fontSize: '3.5rem',
       fontWeight: 700,
@@ -122,7 +122,7 @@ const theme = createTheme({
   },
 });
 
-// Loading 組件
+// Loading component
 const LoadingFallback = () => (
   <Box 
     sx={{ 
@@ -157,10 +157,10 @@ function App() {
 const AppContent: React.FC = () => {
   return (
     <Routes>
-      {/* Landing Page - 不使用 AppLayout */}
+      {/* Landing Page */}
       <Route path="/" element={<LandingPage />} />
       
-      {/* 登入和註冊頁面不使用 AppLayout */}
+      {/* Authentication pages */}
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -178,7 +178,7 @@ const AppContent: React.FC = () => {
       {/* Privacy Policy page */}
       <Route path="/privacy" element={<PrivacyPolicyPage />} />
       
-      {/* 404 重定向 */}
+      {/* 404 redirect */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
